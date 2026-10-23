@@ -1,13 +1,5 @@
-import type { ToastType } from '@/utils/types';
-
-// TODO: Move to some config file or manifest, probably needed in multiple places
-const EXTENSION_NAME = 'I Hate Mailto by rezzonico.dev';
-
-const COLORS: Record<ToastType, string> = {
-  success: '#16a34a',
-  info: '#2563eb',
-  error: '#dc2626',
-};
+import type { ToastPosition, ToastType } from '@/utils/types';
+import { settings } from '.';
 
 const ICONS: Record<ToastType, string> = {
   success: '✓',
@@ -15,8 +7,17 @@ const ICONS: Record<ToastType, string> = {
   error: '✕',
 };
 
+const EDGE_OFFSET = '24px';
+
+const POSITION_STYLES: Record<ToastPosition, string> = {
+  'top-right': `top:${EDGE_OFFSET}; right:${EDGE_OFFSET};`,
+  'top-left': `top:${EDGE_OFFSET}; left:${EDGE_OFFSET};`,
+  'bottom-right': `bottom:${EDGE_OFFSET}; right:${EDGE_OFFSET};`,
+  'bottom-left': `bottom:${EDGE_OFFSET}; left:${EDGE_OFFSET};`,
+};
+
 const ANIMATION_MS = 200;
-const SLIDE_OFFSET = '16px';
+const SLIDE_DISTANCE = 16;
 
 const STYLES = `
   .toast {
@@ -26,8 +27,8 @@ const STYLES = `
     max-width: 380px;
     padding: 14px 20px;
     border-radius: 10px;
-    background: var(--color);
-    color: #fff;
+    background: var(--toast-bg);
+    color: var(--toast-color);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   }
   .icon {
@@ -56,8 +57,12 @@ const STYLES = `
   }
 `;
 
-const slideKeyframes = (visible: boolean): Keyframe[] => {
-  const hidden = { opacity: 0, transform: `translateY(${SLIDE_OFFSET})` };
+type ToastSettings = Awaited<ReturnType<typeof settings.getAll>>;
+
+/** Slide in from the screen edge the toast is anchored to. */
+const slideKeyframes = (visible: boolean, position: ToastPosition): Keyframe[] => {
+  const offset = position.startsWith('top') ? -SLIDE_DISTANCE : SLIDE_DISTANCE;
+  const hidden = { opacity: 0, transform: `translateY(${offset}px)` };
   const shown = { opacity: 1, transform: 'translateY(0)' };
   return visible ? [hidden, shown] : [shown, hidden];
 };
@@ -69,38 +74,42 @@ const createTextElement = (className: string, text: string) => {
   return el;
 };
 
-const createToastElement = (message: string, type: ToastType) => {
+const createToastElement = (message: string, type: ToastType, config: ToastSettings) => {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.role = 'status';
-  toast.style.setProperty('--color', COLORS[type]);
+  toast.style.setProperty('--toast-color', config.toastColors[type]);
+  toast.style.setProperty('--toast-bg', config.toastBackgrounds[type]);
 
   const content = document.createElement('div');
   content.className = 'content';
-  content.append(createTextElement('header', EXTENSION_NAME), createTextElement('message', message));
+  content.append(createTextElement('header', config.extensionName), createTextElement('message', message));
 
   toast.append(createTextElement('icon', ICONS[type]), content);
   return toast;
 };
 
-const showToast = (message: string, type: ToastType = 'info', duration: number = 2000) => {
+const showToast = async (message: string, type: ToastType = 'info', duration: number = 2000) => {
+  const config = await settings.getAll();
+  if (!config.toastEnabled) return;
+
   // Shadow DOM to avoid style conflicts with the page's own styles
   const root = document.createElement('div');
-  root.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:2147483647;';
+  root.style.cssText = `position:fixed; ${POSITION_STYLES[config.toastPosition]} z-index:2147483647;`;
 
   const shadow = root.attachShadow({ mode: 'closed' });
   const style = document.createElement('style');
   style.textContent = STYLES;
 
-  const toast = createToastElement(message, type);
+  const toast = createToastElement(message, type, config);
   shadow.append(style, toast);
   document.documentElement.appendChild(root);
 
   const animationOptions = { duration: ANIMATION_MS, easing: 'ease-out' };
-  toast.animate(slideKeyframes(true), animationOptions);
+  toast.animate(slideKeyframes(true, config.toastPosition), animationOptions);
 
   setTimeout(() => {
-    const exit = toast.animate(slideKeyframes(false), {
+    const exit = toast.animate(slideKeyframes(false, config.toastPosition), {
       ...animationOptions,
       fill: 'forwards',
     });
