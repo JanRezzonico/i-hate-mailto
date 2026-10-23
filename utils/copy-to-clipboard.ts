@@ -1,13 +1,13 @@
 const fallbackCopy = (content: string): boolean => {
   const previouslyFocused = document.activeElement as HTMLElement | null;
-  const ta = document.createElement("textarea");
+  const ta = document.createElement('textarea');
   ta.value = content;
-  ta.setAttribute("readonly", "");
-  ta.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+  ta.setAttribute('readonly', '');
+  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
   document.body.appendChild(ta);
   try {
     ta.select();
-    const success = document.execCommand("copy");
+    const success = document.execCommand('copy');
     return success;
   } catch {
     return false;
