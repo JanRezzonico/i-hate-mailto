@@ -1,6 +1,11 @@
 {
-  "name": "wxt-starter",
-  "description": "manifest.json description",
+  "name": "i-hate-mailto",
+  "description": "I Hate Mailto is a simple browser extension that intercepts mailto links and copies the address to the clipboard instead of opening the default email client.",
+  "author": {
+    "email": "i-hate-mailto@rezzonico.dev",
+    "name": "rezzonico.dev",
+    "url": "https://rezzonico.dev"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",
