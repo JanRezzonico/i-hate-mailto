@@ -9,6 +9,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev:page": "serve dev-pages -l 5000",
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "dev:lang-it": "DEV_LANG=it wxt",
@@ -24,6 +25,7 @@
     "@wxt-dev/i18n": "0.2.8",
     "daisyui": "5.7.50",
     "prettier": "3.9.10",
+    "serve": "^14.2.6",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
     "vite": "8.3.5",

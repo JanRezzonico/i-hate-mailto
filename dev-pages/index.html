@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mailto dev page</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fafaf9;
+        --fg: #1c1917;
+        --muted: #78716c;
+        --line: #d6d3d1;
+        --accent: #2563eb;
+        --code-bg: #f0efed;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1a1918;
+          --fg: #e7e5e4;
+          --muted: #a8a29e;
+          --line: #3d3a38;
+          --accent: #60a5fa;
+          --code-bg: #262322;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 2rem 1rem 6rem;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.55 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 52rem;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin: 0 0 0.25rem;
+      }
+      h2 {
+        font-size: 1.05rem;
+        margin: 2.25rem 0 0.5rem;
+        padding-bottom: 0.35rem;
+        border-bottom: 1px solid var(--line);
+      }
+      p.lead {
+        margin: 0 0 1rem;
+        color: var(--muted);
+      }
+      a {
+        color: var(--accent);
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        display: grid;
+        grid-template-columns: 14rem 1fr;
+        gap: 0.25rem 1rem;
+        padding: 0.45rem 0;
+        align-items: baseline;
+      }
+      li small {
+        color: var(--muted);
+      }
+      code,
+      textarea,
+      output {
+        font:
+          13px/1.5 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+      }
+      code {
+        background: var(--code-bg);
+        padding: 0.1rem 0.35rem;
+        border-radius: 3px;
+        word-break: break-all;
+      }
+      textarea {
+        width: 100%;
+        min-height: 6rem;
+        padding: 0.6rem;
+        resize: vertical;
+        background: var(--code-bg);
+        color: var(--fg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+      }
+      button {
+        font: inherit;
+        padding: 0.35rem 0.8rem;
+        cursor: pointer;
+        background: var(--code-bg);
+        color: var(--fg);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      textarea:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+      }
+      .env {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 40rem) {
+        li {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>mailto dev page</h1>
+      <p class="lead">
+        Click each link. The extension should copy the address and show a toast instead of opening a mail client.
+      </p>
+      <p class="env" id="env"></p>
+
+      <h2>Paste area</h2>
+      <p class="lead">Paste here after a click to check what landed in the clipboard.</p>
+      <textarea id="paste" placeholder="Ctrl/Cmd+V here"></textarea>
+      <div class="row">
+        <button type="button" id="clear">Clear</button>
+        <button type="button" id="read">Read clipboard</button>
+        <output id="readout"></output>
+      </div>
+
+      <h2>Basic</h2>
+      <ul>
+        <li>
+          <a href="mailto:jane@example.com">Single address</a><small><code>mailto:jane@example.com</code></small>
+        </li>
+        <li>
+          <a href="MAILTO:jane@example.com">Uppercase scheme</a><small><code>MAILTO:jane@example.com</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=Hello">With subject</a><small><code>?subject=Hello</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=Hello&body=Line%201%0D%0ALine%202">Subject and multiline body</a
+          ><small><code>body=Line%201%0D%0ALine%202</code></small>
+        </li>
+        <li>
+          <a href="mailto:?to=jane@example.com&subject=No%20path%20address">Address only in <code>to</code> param</a
+          ><small><code>mailto:?to=...</code></small>
+        </li>
+      </ul>
+
+      <h2>Multiple recipients</h2>
+      <ul>
+        <li>
+          <a href="mailto:a@example.com,b@example.com">Comma separated</a
+          ><small><code>a@example.com,b@example.com</code></small>
+        </li>
+        <li>
+          <a href="mailto:a@example.com;b@example.com">Semicolon separated</a
+          ><small><code>a@example.com;b@example.com</code></small>
+        </li>
+        <li>
+          <a href="mailto:a@example.com?cc=b@example.com&bcc=c@example.com">With cc and bcc</a
+          ><small><code>cc=...&bcc=...</code></small>
+        </li>
+        <li>
+          <a href="mailto:a@example.com?to=b@example.com">Path plus <code>to</code> param</a
+          ><small>both should be collected</small>
+        </li>
+      </ul>
+
+      <h2>Encoding and edge cases</h2>
+      <ul>
+        <li>
+          <a href="mailto:j%C3%BCrgen@example.com">Percent-encoded local part</a
+          ><small><code>j%C3%BCrgen@example.com</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane+tag@example.com">Plus tag</a><small><code>jane+tag@example.com</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=Caf%C3%A9%20%26%20Cr%C3%A8me%20%E2%98%95"
+            >Unicode and ampersand in subject</a
+          ><small><code>Caf%C3%A9%20%26%20...</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=a+b">Plus in query (space or literal?)</a
+          ><small><code>subject=a+b</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=">Empty subject</a><small><code>subject=</code></small>
+        </li>
+        <li><a href="mailto:">Empty mailto</a><small>should show the error toast</small></li>
+        <li>
+          <a href="mailto:not-an-address">Invalid address</a><small><code>not-an-address</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?subject=Hi&subject=Again">Duplicate params</a
+          ><small><code>subject=Hi&subject=Again</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com?SUBJECT=Upper&Body=Mixed">Mixed-case param names</a
+          ><small><code>SUBJECT=...&Body=...</code></small>
+        </li>
+        <li>
+          <a href="mailto:jane@example.com#fragment">With fragment</a><small><code>#fragment</code></small>
+        </li>
+      </ul>
+
+      <h2>DOM variants</h2>
+      <ul>
+        <li>
+          <a href="mailto:nested@example.com"
+            ><span><strong>Click on a nested element</strong></span></a
+          ><small>target is a child of the anchor</small>
+        </li>
+        <li>
+          <a href="mailto:blank@example.com" target="_blank" rel="noopener">With target=_blank</a
+          ><small>should not open a new tab</small>
+        </li>
+        <li>
+          <a href="mailto:download@example.com" download>With download attribute</a><small>odd, but possible</small>
+        </li>
+        <li><a href="mailto:rel@example.com" rel="nofollow noreferrer">With rel attributes</a><small></small></li>
+        <li><span id="dynamic-slot"></span><small>link added after load, and one more every 5 s</small></li>
+        <li><span id="shadow-slot"></span><small>anchor inside a shadow root</small></li>
+        <li>
+          <iframe
+            title="same-origin frame"
+            style="width: 100%; height: 2.5rem; border: 1px solid var(--line); border-radius: 4px"
+            srcdoc='<a href="mailto:frame@example.com" style="font:16px system-ui">Link inside an iframe</a>'
+          ></iframe
+          ><small>needs <code>allFrames: true</code></small>
+        </li>
+        <li>
+          <button type="button" id="js-open">window.location = mailto:...</button
+          ><small>script-driven navigation, no anchor</small>
+        </li>
+      </ul>
+
+      <h2>Controls: should not be intercepted</h2>
+      <ul>
+        <li><a href="https://example.com">Regular https link</a><small>opens normally</small></li>
+        <li><a href="tel:+41000000000">tel: link</a><small>untouched</small></li>
+        <li><a href="/index.html#mailto:jane@example.com">mailto only in the fragment</a><small>untouched</small></li>
+        <li><a href="mailto-lookalike.html">File name starting with mailto</a><small>untouched</small></li>
+      </ul>
+    </main>
+
+    <script>
+      // Environment line
+      document.getElementById('env').textContent =
+        `${navigator.userAgent.includes('Firefox') ? 'Firefox' : 'Chromium'} · lang ${navigator.language}`;
+
+      // Paste area helpers
+      const paste = document.getElementById('paste');
+      const readout = document.getElementById('readout');
+      document.getElementById('clear').addEventListener('click', () => {
+        paste.value = '';
+        readout.textContent = '';
+      });
+      document.getElementById('read').addEventListener('click', async () => {
+        try {
+          const text = await navigator.clipboard.readText();
+          paste.value = text;
+          readout.textContent = `${text.length} chars`;
+        } catch (err) {
+          readout.textContent = `read failed: ${err.name}`;
+        }
+      });
+
+      // Dynamically added links
+      function addDynamicLink() {
+        const slot = document.getElementById('dynamic-slot');
+        const a = document.createElement('a');
+        const n = slot.childElementCount + 1;
+        a.href = `mailto:dynamic${n}@example.com`;
+        a.textContent = `Dynamic link ${n}`;
+        a.style.marginRight = '.75rem';
+        slot.append(a);
+      }
+      setTimeout(addDynamicLink, 500);
+      setInterval(() => {
+        if (document.getElementById('dynamic-slot').childElementCount < 5) addDynamicLink();
+      }, 5000);
+
+      // Anchor inside an open shadow root
+      const host = document.getElementById('shadow-slot');
+      const root = host.attachShadow({ mode: 'open' });
+      root.innerHTML = '<a href="mailto:shadow@example.com" style="color:inherit">Link in shadow DOM</a>';
+
+      // Script-driven navigation
+      document.getElementById('js-open').addEventListener('click', () => {
+        window.location.href = 'mailto:script@example.com?subject=From%20script';
+      });
+    </script>
+  </body>
+</html>

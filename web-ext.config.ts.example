@@ -7,4 +7,5 @@ const lang = process.env.DEV_LANG ?? 'en';
 
 export default defineWebExtConfig({
   chromiumArgs: [`--lang=${lang}`],
+  startUrls: ['http://localhost:5000/index.html'],
 });
