@@ -5,6 +5,7 @@
     "name": "rezzonico.dev",
     "url": "https://rezzonico.dev"
   },
+  "icon": "assets/128.png",
   "private": true,
   "version": "0.0.0",
   "type": "module",
