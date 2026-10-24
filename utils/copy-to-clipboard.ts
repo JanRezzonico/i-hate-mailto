@@ -43,7 +43,9 @@ const formatCopiedContent = async (d: DecodedMailto): Promise<string> => {
   }
 };
 
-const copyToClipboard = async (mailto: DecodedMailto): Promise<boolean> => {
+type CopyToClipboardResult = boolean;
+
+const copyToClipboard = async (mailto: DecodedMailto): Promise<CopyToClipboardResult> => {
   const content = await formatCopiedContent(mailto);
   try {
     await navigator.clipboard.writeText(content);

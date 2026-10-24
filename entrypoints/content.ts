@@ -3,14 +3,21 @@ import { decodeMailto, isMailtoHref } from '@/utils/parse-mailto';
 
 export default defineContentScript({
   matches: ['<all_urls>'],
+  allFrames: true, // Extend behavior to iframes
+  matchAboutBlank: true, // Extend behavior to about:blank and about:srcdoc
+  matchOriginAsFallback: true, // Extend behavior to iframes with different origins
   runAt: 'document_start',
 
   main() {
     document.addEventListener(
       'click',
       async (e) => {
-        const target = e.target as Element | null;
-        const mailtoLink = target?.closest<HTMLAnchorElement>('a[href^="mailto:" i]');
+        const mailtoLink = e
+          .composedPath() // Also includes shadow DOM elements
+          .find(
+            (n): n is HTMLAnchorElement =>
+              n instanceof HTMLAnchorElement && /^\s*mailto:/i.test(n.getAttribute('href') ?? ''),
+          );
         if (!mailtoLink) return;
 
         e.preventDefault();
