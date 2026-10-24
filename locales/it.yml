@@ -1,0 +1,43 @@
+extName: I Hate Mailto
+extDescription: I Hate Mailto è una semplice estensione per browser che intercetta i link mailto e copia l'indirizzo negli appunti invece di aprire il client di posta predefinito.
+extNameLong: I Hate Mailto di rezzonico.dev
+
+popupTitle: I Hate Mailto di rezzonico.dev
+optionsTitle: Opzioni - I Hate Mailto di rezzonico.dev
+
+copySuccess: '$1 copiato negli appunti'
+copyFail: 'Impossibile copiare $1 negli appunti'
+
+toastTypeSuccess: successo
+toastTypeInfo: info
+toastTypeError: errore
+
+background: Sfondo
+text: Testo
+
+popupHeaderHeading: I Hate Mailto di rezzonico.dev
+popupHeaderDescription: Quando si clicca su un link mailto, l'indirizzo viene copiato negli appunti invece di aprire un'app di posta elettronica.
+popupToastSettingsHeading: Impostazioni dei toast
+popupToastDurationLabel: Durata
+popupToastPositionLabel: Posizione
+popupToastColorsLabel: Colori
+popupOpenOptionsButton: Apri le impostazioni
+
+optionsHeaderHeading: Impostazioni
+optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo email viene copiato.
+optionsToastSettingsHeading: Impostazioni dei toast
+optionsToastDurationLabel: Durata (ms)
+optionsToastPositionLabel: Posizione
+optionsResetButton: Ripristina i valori predefiniti
+optionsSaveButton: Salva
+optionsErrorDuration: Inserisci un numero intero compreso tra $1 e $2.
+optionsErrorPosition: Posizione non valida.
+optionsErrorColors: Tutti i colori devono essere valori esadecimali validi.
+optionsErrorFallback: Correggi il campo evidenziato.
+optionsSettingsSaved: Impostazioni salvate correttamente.
+optionsSettingsReset: Impostazioni ripristinate ai valori predefiniti.
+
+positionTopRight: In alto a destra
+positionTopLeft: In alto a sinistra
+positionBottomRight: In basso a destra
+positionBottomLeft: In basso a sinistra

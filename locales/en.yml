@@ -5,8 +5,6 @@ extNameLong: I Hate Mailto by rezzonico.dev
 popupTitle: I Hate Mailto by rezzonico.dev
 optionsTitle: Options - I Hate Mailto by rezzonico.dev
 
-
-
 copySuccess: Copied $1 to clipboard
 copyFail: Failed to copy $1 to clipboard
 
@@ -14,8 +12,8 @@ toastTypeSuccess: success
 toastTypeInfo: info
 toastTypeError: error
 
-
-
+background: Background
+text: Text
 
 popupHeaderHeading: I Hate Mailto by rezzonico.dev
 popupHeaderDescription: Clicking a mailto link copies the address to your clipboard instead of opening a mail app.
@@ -24,8 +22,6 @@ popupToastDurationLabel: Duration
 popupToastPositionLabel: Position
 popupToastColorsLabel: Colors
 popupOpenOptionsButton: Open settings
-
-
 
 optionsHeaderHeading: Settings
 optionsHeaderDescription: Customize the toast shown when an email address is copied.
@@ -40,9 +36,6 @@ optionsErrorColors: All colors must be valid hex values.
 optionsErrorFallback: Please fix the highlighted field.
 optionsSettingsSaved: Settings saved successfully.
 optionsSettingsReset: Settings reset to defaults.
-
-
-
 
 positionTopRight: Top Right
 positionTopLeft: Top Left
