@@ -6,8 +6,12 @@
 - [ ] Add option to extend behavior to other protocols (e.g., tel:, sms:), configurable in the options page
 - [ ] Click to dismiss toast
 - [ ] Stop toast timer on hover
+- [ ] Stacked toasts
 
 ## Chores
 
 - [ ] Use daisyui popups for the toast previews instead of css styles **Note** be careful with shadow DOM and style bleeding
 - [ ] Permission narrowing if possible
+
+## Bugs
+- [ ] "To" mode with no recipients: mailto:?subject=hi copies an empty string and still reports success

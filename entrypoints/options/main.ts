@@ -1,17 +1,13 @@
 import '@/assets/tailwind-daisyui.css';
 import { getColorInput, getElements, getPreviewElement } from './utils/get-elements';
-import {
-  DURATION_MIN,
-  DURATION_MAX,
-  TOAST_POSITIONS,
-  TOAST_TYPES,
-  type ToastType,
-  type ToastPosition,
-} from '@/utils/types';
-import { type Errors, type Values } from './utils/types';
-import { translateToastType } from '@/utils/translate-toast-type';
-import { translateToastPosition } from '@/utils/translate-toast-position';
-import { translateCopyMode } from '@/utils/translate-copy-mode';
+import { TOAST_DURATION_MAX, TOAST_DURATION_MIN, TOAST_POSITIONS, TOAST_TYPES } from '@/utils/toast/constants';
+import { translateToastPosition, translateToastType } from '@/utils/toast/translate';
+import { translateCopyMode } from '@/utils/clipboard/translate-copy-mode';
+import { COPY_MODES } from '@/utils/clipboard/constants';
+import type { ToastPosition, ToastType } from '@/utils/toast/types';
+import type { Errors, Values } from './utils/types';
+import type { CopyMode } from '@/utils/clipboard/types';
+import { settings } from '@/utils/settings/settings';
 
 const els = getElements();
 
@@ -70,8 +66,8 @@ const updateToastPreviews = () => {
 const populateFormValues = (values: Values) => {
   els.duration.value = String(values.toastDuration);
   els.position.value = values.toastPosition;
-  els.duration.min = String(DURATION_MIN);
-  els.duration.max = String(DURATION_MAX);
+  els.duration.min = String(TOAST_DURATION_MIN);
+  els.duration.max = String(TOAST_DURATION_MAX);
   for (const t of TOAST_TYPES) {
     getColorInput(t, 'background').value = values.toastBackgrounds[t];
     getColorInput(t, 'text').value = values.toastColors[t];
@@ -134,9 +130,9 @@ const validateValues = (values: Values): Errors => {
   const errors: Errors = {};
 
   const d = values.toastDuration;
-  // Duration must be a whole number between DURATION_MIN and DURATION_MAX (inclusive)
-  if (els.duration.value.trim() === '' || !Number.isInteger(d) || d < DURATION_MIN || d > DURATION_MAX) {
-    errors.duration = i18n.t('optionsErrorDuration', [DURATION_MIN, DURATION_MAX]);
+  // Duration must be a whole number between TOAST_DURATION_MIN and TOAST_DURATION_MAX (inclusive)
+  if (els.duration.value.trim() === '' || !Number.isInteger(d) || d < TOAST_DURATION_MIN || d > TOAST_DURATION_MAX) {
+    errors.duration = i18n.t('optionsErrorDuration', [TOAST_DURATION_MIN, TOAST_DURATION_MAX]);
   }
 
   // Toast position must be one of the allowed values
@@ -147,7 +143,7 @@ const validateValues = (values: Values): Errors => {
   // All colors must be valid hex values
   const allColors = [...Object.values(values.toastBackgrounds), ...Object.values(values.toastColors)];
   const HEX_COLOR_REGEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i; // Allows both #RGB and #RRGGBB hex color formats
-  if (!allColors.every((c) => HEX_COLOR_REGEX.test(c))) {
+  if (!allColors.every((c) => HEX_COLOR_REGEX.test(String(c)))) {
     errors.other = i18n.t('optionsErrorColors');
   }
 

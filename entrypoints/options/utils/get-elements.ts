@@ -1,3 +1,5 @@
+import type { ToastType } from '@/utils/toast/types';
+
 function $<T extends HTMLElement>(selector: string): T {
   const el = document.querySelector<T>(selector);
   if (!el) throw new Error(`Missing element: ${selector}`);

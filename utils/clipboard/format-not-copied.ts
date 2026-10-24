@@ -1,3 +1,6 @@
+import { i18n } from '#imports';
+import type { NotCopiedInfo } from './types';
+
 const MAX_VALUE_LENGTH = 80;
 
 const truncate = (text: string): string => {

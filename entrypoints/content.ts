@@ -1,5 +1,9 @@
-import copyToClipboard from '@/utils/copy-to-clipboard';
-import { decodeMailto, isMailtoHref } from '@/utils/parse-mailto';
+import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
+import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
+import { decodeMailto, isMailtoHref } from '@/utils/mailto/parse-mailto';
+import { settings } from '@/utils/settings/settings';
+import { computeInfoToastDuration } from '@/utils/toast/compute-info-toast-duration';
+import showToast from '@/utils/toast/show-toast';
 
 export default defineContentScript({
   matches: ['<all_urls>'],

@@ -1,6 +1,8 @@
 import '@/assets/tailwind-daisyui.css';
-import { translateToastPosition } from '@/utils/translate-toast-position';
-import { translateToastType } from '@/utils/translate-toast-type';
+import { translateCopyMode } from '@/utils/clipboard/translate-copy-mode';
+import { settings } from '@/utils/settings/settings';
+import { TOAST_TYPES } from '@/utils/toast/constants';
+import { translateToastPosition, translateToastType } from '@/utils/toast/translate';
 
 type Values = Awaited<ReturnType<typeof settings.getAll>>;
 
