@@ -241,7 +241,7 @@
           <a href="mailto:download@example.com" download>With download attribute</a><small>odd, but possible</small>
         </li>
         <li><a href="mailto:rel@example.com" rel="nofollow noreferrer">With rel attributes</a><small></small></li>
-        <li><span id="dynamic-slot"></span><small>link added after load, and one more every 5 s</small></li>
+        <li><span id="dynamic-slot"></span><small>link added after load, and one more every 30 s</small></li>
         <li><span id="shadow-slot"></span><small>anchor inside a shadow root</small></li>
         <li>
           <iframe
@@ -301,7 +301,7 @@
       setTimeout(addDynamicLink, 500);
       setInterval(() => {
         if (document.getElementById('dynamic-slot').childElementCount < 5) addDynamicLink();
-      }, 5000);
+      }, 30000);
 
       // Anchor inside an open shadow root
       const host = document.getElementById('shadow-slot');

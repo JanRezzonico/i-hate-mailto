@@ -11,17 +11,15 @@ export default defineContentScript({
       async (e) => {
         const target = e.target as Element | null;
         const mailtoLink = target?.closest<HTMLAnchorElement>('a[href^="mailto:" i]');
-        if (!mailtoLink) return; // Not a mailto link, ignore
+        if (!mailtoLink) return;
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
         const hrefValue = mailtoLink.getAttribute('href') ?? '';
-        if (!isMailtoHref(hrefValue)) return; // Not a mailto link, ignore
+        if (!isMailtoHref(hrefValue)) return;
 
         const decoded = decodeMailto(hrefValue);
-
-        // TODO: handle other fields
 
         const copySuccess = await copyToClipboard(decoded);
         if (copySuccess) {
