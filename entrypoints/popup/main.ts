@@ -1,4 +1,5 @@
 import '@/assets/tailwind-daisyui.css';
+import { translateToastPosition } from '@/utils/translate-toast-position';
 import { translateToastType } from '@/utils/translate-toast-type';
 
 type Values = Awaited<ReturnType<typeof settings.getAll>>;
@@ -33,7 +34,7 @@ function render(values: Values) {
   els.colorsLabel.textContent = i18n.t('popupToastColorsLabel');
   els.openOptions.textContent = i18n.t('popupOpenOptionsButton');
   els.duration.textContent = `${values.toastDuration} ms`;
-  els.position.textContent = values.toastPosition.replace('-', ' ');
+  els.position.textContent = translateToastPosition(values.toastPosition);
 
   els.swatches.replaceChildren(
     ...TOAST_TYPES.map((type) => {

@@ -10,47 +10,36 @@ import {
 } from '@/utils/types';
 import { type Errors, type Values } from './utils/types';
 import { translateToastType } from '@/utils/translate-toast-type';
+import { translateToastPosition } from '@/utils/translate-toast-position';
 
 const els = getElements();
 
 const populatePositionSelectOptions = () => {
-  const prettifyName = (position: ToastPosition) => {
-    switch (position) {
-      case 'top-right':
-        return i18n.t('positionTopRight');
-      case 'top-left':
-        return i18n.t('positionTopLeft');
-      case 'bottom-right':
-        return i18n.t('positionBottomRight');
-      case 'bottom-left':
-        return i18n.t('positionBottomLeft');
-      default:
-        return position; // Fallback to the raw value if not recognized
-    }
-  };
   els.position.replaceChildren(
     ...TOAST_POSITIONS.map((p) => {
-      const prettyName = prettifyName(p);
+      const prettyName = translateToastPosition(p);
       return new Option(prettyName, p);
     }),
   );
 };
 
 const buildToastColorRows = () => {
-  const buildToastMessage = (type: ToastType) => `${type.charAt(0).toUpperCase() + type.slice(1)} toast!`;
+  const buildToastMessage = (type: ToastType) => {
+    return translateToastType(type);
+  };
   els.colors.innerHTML = TOAST_TYPES.map(
     (type) => `
       <div class="grid grid-cols-[4rem_1fr_1fr_1fr] items-center gap-3">
-        <span class="font-medium">${translateToastType(type)}</span>
+        <span class="font-medium capitalize">${translateToastType(type)}</span>
         <label class="flex items-center gap-2 text-sm">
           <input type="color" data-type="${type}" data-field="background" class="h-8 w-10 cursor-pointer" />
-          Background
+          ${i18n.t('background')}
         </label>
         <label class="flex items-center gap-2 text-sm">
           <input type="color" data-type="${type}" data-field="text" class="h-8 w-10 cursor-pointer" />
-          Text
+          ${i18n.t('text')}
         </label>
-        <div data-preview="${type}" class="rounded-md px-3 py-1.5 text-center text-sm">${buildToastMessage(type)}</div>
+        <div data-preview="${type}" class="rounded-md px-3 py-1.5 text-center text-sm capitalize">${buildToastMessage(type)}</div>
       </div>`,
   ).join('');
 };
