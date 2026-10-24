@@ -1,13 +1,17 @@
 {
   "name": "i-hate-mailto",
+  "private": true,
+  "version": "0.0.0",
   "author": {
     "email": "i-hate-mailto@rezzonico.dev",
     "name": "rezzonico.dev",
     "url": "https://rezzonico.dev"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JanRezzonico/i-hate-mailto.git"
+  },
   "icon": "assets/128.png",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev:page": "serve dev-pages -l 5000",
