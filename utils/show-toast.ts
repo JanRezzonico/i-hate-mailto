@@ -51,6 +51,7 @@ const STYLES = `
   }
   .message {
     font: 500 15px/1.4 system-ui, sans-serif;
+    white-space: pre-wrap;
   }
 `;
 
@@ -86,7 +87,7 @@ const createToastElement = (message: string, type: ToastType, config: ToastSetti
   return toast;
 };
 
-const showToast = async (message: string, type: ToastType = 'info') => {
+const showToast = async (message: string, type: ToastType = 'info', duration?: number) => {
   const config = await settings.getAll();
 
   // Shadow DOM to avoid style conflicts with the page's own styles
@@ -110,7 +111,7 @@ const showToast = async (message: string, type: ToastType = 'info') => {
       fill: 'forwards',
     });
     exit.onfinish = () => root.remove();
-  }, config.toastDuration);
+  }, duration ?? config.toastDuration);
 };
 
 export default showToast;

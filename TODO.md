@@ -4,7 +4,8 @@
 
 - [ ] Add option to disable the extension on certain websites
 - [ ] Add option to extend behavior to other protocols (e.g., tel:, sms:), configurable in the options page
-- [ ] Signal to user if subject or other parameters were truncated when copying the address
+- [ ] Click to dismiss toast
+- [ ] Stop toast timer on hover
 
 ## Chores
 

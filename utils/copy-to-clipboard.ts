@@ -19,14 +19,41 @@ const fallbackCopy = (content: string): boolean => {
   }
 };
 
-const formatCopiedContent = async (d: DecodedMailto): Promise<string> => {
+export type NotCopiedInfo = Partial<Pick<DecodedMailto, 'to' | 'cc' | 'bcc' | 'subject' | 'headers' | 'body'>>;
+
+type FormattedContent = {
+  content: string;
+  notCopied: NotCopiedInfo | null;
+};
+
+const collectNotCopied = (d: DecodedMailto, keys: (keyof NotCopiedInfo)[]): NotCopiedInfo | null => {
+  const result: NotCopiedInfo = {};
+  for (const key of keys) {
+    const value = d[key];
+    const isEmpty = Array.isArray(value)
+      ? value.length === 0
+      : typeof value === 'object' && value !== null
+        ? Object.keys(value).length === 0
+        : !value;
+    if (!isEmpty) (result as Record<string, unknown>)[key] = value;
+  }
+  return Object.keys(result).length ? result : null;
+};
+
+const formatCopiedContent = async (d: DecodedMailto): Promise<FormattedContent> => {
   const mode = await settings.get('copyMode');
   switch (mode) {
     case 'to':
-      return d.to.join(', ');
+      return {
+        content: d.to.join(', '),
+        notCopied: collectNotCopied(d, ['cc', 'bcc', 'subject', 'headers', 'body']),
+      };
 
     case 'recipients':
-      return [...d.to, ...d.cc, ...d.bcc].join(', ');
+      return {
+        content: [...d.to, ...d.cc, ...d.bcc].join(', '),
+        notCopied: collectNotCopied(d, ['subject', 'headers', 'body']),
+      };
 
     case 'full': {
       const lines: string[] = [];
@@ -38,22 +65,21 @@ const formatCopiedContent = async (d: DecodedMailto): Promise<string> => {
         lines.push(`${name}: ${value}`);
       }
       if (d.body) lines.push('', d.body);
-      return lines.join('\n');
+      return { content: lines.join('\n'), notCopied: null };
     }
   }
 };
 
-type CopyToClipboardResult = boolean;
+export type CopyToClipboardResult = { success: false } | { success: true; notCopied: NotCopiedInfo | null };
 
 const copyToClipboard = async (mailto: DecodedMailto): Promise<CopyToClipboardResult> => {
-  const content = await formatCopiedContent(mailto);
+  const { content, notCopied } = await formatCopiedContent(mailto);
   try {
     await navigator.clipboard.writeText(content);
   } catch {
-    const fallbackSuccess = fallbackCopy(content);
-    return fallbackSuccess;
+    if (!fallbackCopy(content)) return { success: false };
   }
-  return true;
+  return { success: true, notCopied };
 };
 
 export default copyToClipboard;

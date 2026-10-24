@@ -53,3 +53,11 @@ copyModeFull: Full
 copyModeToDescription: Copies only the "To" addresses from the mailto link.
 copyModeRecipientsDescription: Copies all recipients from the mailto link, including "To", "Cc", and "Bcc" addresses.
 copyModeFullDescription: 'Copies the entire mailto link, including all parameters and values. Note: this always copies multiple lines, even if there is only one recipient.'
+
+copyPartial: "Copied successfully.\nNot included:\n$1"
+fieldTo: To
+fieldCc: Cc
+fieldBcc: Bcc
+fieldSubject: subject
+fieldHeaders: headers
+fieldBody: body

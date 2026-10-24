@@ -28,9 +28,15 @@ export default defineContentScript({
 
         const decoded = decodeMailto(hrefValue);
 
-        const copySuccess = await copyToClipboard(decoded);
-        if (copySuccess) {
-          await showToast(i18n.t('copySuccess'), 'success');
+        const result = await copyToClipboard(decoded);
+        if (result.success) {
+          if (result.notCopied) {
+            const message = i18n.t('copyPartial', [formatNotCopied(result.notCopied)]);
+            const base = await settings.get('toastDuration');
+            await showToast(message, 'info', computeInfoToastDuration(base, message));
+          } else {
+            await showToast(i18n.t('copySuccess'), 'success');
+          }
         } else {
           await showToast(i18n.t('copyFail'), 'error');
         }
