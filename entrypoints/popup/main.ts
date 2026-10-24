@@ -22,6 +22,19 @@ const els = {
   openOptions: $<HTMLButtonElement>('#open-options'),
 };
 
+const translateToastType = (type: ToastType) => {
+  switch (type) {
+    case 'success':
+      return i18n.t('toastTypeSuccess');
+    case 'info':
+      return i18n.t('toastTypeInfo');
+    case 'error':
+      return i18n.t('toastTypeError');
+    default:
+      return type; // Fallback to english if there is any issue
+  }
+};
+
 function render(values: Values) {
   els.title.textContent = i18n.t('popupTitle');
   els.headerHeading.textContent = i18n.t('popupHeaderHeading');
@@ -38,7 +51,7 @@ function render(values: Values) {
     ...TOAST_TYPES.map((type) => {
       const swatch = document.createElement('span');
       swatch.className = 'badge badge-sm border-0';
-      swatch.textContent = type;
+      swatch.textContent = translateToastType(type);
       swatch.style.backgroundColor = values.toastBackgrounds[type];
       swatch.style.color = values.toastColors[type];
       return swatch;

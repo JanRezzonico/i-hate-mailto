@@ -10,6 +10,10 @@ optionsTitle: Options - I Hate Mailto by rezzonico.dev
 copySuccess: Copied $1 to clipboard
 copyFail: Failed to copy $1 to clipboard
 
+toastTypeSuccess: success
+toastTypeInfo: info
+toastTypeError: error
+
 
 
 
