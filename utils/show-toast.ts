@@ -1,6 +1,3 @@
-import type { ToastPosition, ToastType } from '@/utils/types';
-import { settings } from '.';
-
 const ICONS: Record<ToastType, string> = {
   success: '✓',
   info: 'i',
@@ -83,15 +80,14 @@ const createToastElement = (message: string, type: ToastType, config: ToastSetti
 
   const content = document.createElement('div');
   content.className = 'content';
-  content.append(createTextElement('header', config.extensionName), createTextElement('message', message));
+  content.append(createTextElement('header', 'I Hate Mailto by rezzonico.dev'), createTextElement('message', message));
 
   toast.append(createTextElement('icon', ICONS[type]), content);
   return toast;
 };
 
-const showToast = async (message: string, type: ToastType = 'info', duration: number = 2000) => {
+const showToast = async (message: string, type: ToastType = 'info') => {
   const config = await settings.getAll();
-  if (!config.toastEnabled) return;
 
   // Shadow DOM to avoid style conflicts with the page's own styles
   const root = document.createElement('div');
@@ -114,7 +110,7 @@ const showToast = async (message: string, type: ToastType = 'info', duration: nu
       fill: 'forwards',
     });
     exit.onfinish = () => root.remove();
-  }, duration);
+  }, config.toastDuration);
 };
 
 export default showToast;

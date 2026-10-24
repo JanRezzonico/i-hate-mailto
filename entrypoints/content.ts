@@ -24,7 +24,7 @@ export default defineContentScript({
         if (copySuccess) {
           await showToast(`Copied "${address}" to clipboard`, 'success');
         } else {
-          await showToast(`Failed to copy "${address}" to clipboard`, 'error', 5000);
+          await showToast(`Failed to copy "${address}" to clipboard`, 'error');
         }
       },
       true, // Use capture phase to intercept before the page's own handlers
