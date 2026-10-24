@@ -7,34 +7,33 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@wxt-dev/i18n':
-        specifier: ^0.2.8
-        version: 0.2.8(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0)(supports-color@7.2.0))(rolldown@1.2.15)(typescript@5.9.3)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))(web-ext@10.8.0(jiti@2.7.0)(supports-color@7.2.0)))
     devDependencies:
       '@tailwindcss/vite':
-        specifier: ^4.3.3
+        specifier: 4.3.3
         version: 4.3.3(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))
+      '@wxt-dev/i18n':
+        specifier: 0.2.8
+        version: 0.2.8(wxt@0.21.4(eslint@9.39.4(jiti@2.7.0)(supports-color@7.2.0))(rolldown@1.2.15)(typescript@5.9.3)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))(web-ext@10.8.0(jiti@2.7.0)(supports-color@7.2.0)))
       daisyui:
-        specifier: ^5.7.50
+        specifier: 5.7.50
         version: 5.7.50
       prettier:
-        specifier: ^3.9.10
+        specifier: 3.9.10
         version: 3.9.10
       tailwindcss:
-        specifier: ^4.3.3
+        specifier: 4.3.3
         version: 4.3.3
       typescript:
-        specifier: ^5.9.3
+        specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^8.1.5
+        specifier: 8.3.5
         version: 8.3.5(@types/node@26.6.5)(jiti@2.7.0)
       web-ext:
-        specifier: ^10.5.0
+        specifier: 10.8.0
         version: 10.8.0(jiti@2.7.0)(supports-color@7.2.0)
       wxt:
-        specifier: ^0.21.3
+        specifier: 0.21.4
         version: 0.21.4(eslint@9.39.4(jiti@2.7.0)(supports-color@7.2.0))(rolldown@1.2.15)(typescript@5.9.3)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0))(web-ext@10.8.0(jiti@2.7.0)(supports-color@7.2.0))
 
 packages:
