@@ -14,6 +14,11 @@ export const getElements = () => ({
   colors: $('#colors'),
   status: $('#status'),
   reset: $<HTMLButtonElement>('#reset'),
+  headerHeading: $('#header-heading'),
+  headerDescription: $('#header-description'),
+  toastSettingsHeading: $('#toast-settings-heading'),
+  durationLabel: $('#duration-label'),
+  positionLabel: $('#position-label'),
 });
 
 export const getPreviewElement = (type: ToastType) => {

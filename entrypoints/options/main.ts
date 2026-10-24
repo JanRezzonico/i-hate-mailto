@@ -9,15 +9,24 @@ import {
   type ToastPosition,
 } from '@/utils/types';
 import { type Errors, type Values } from './utils/types';
+import { translateToastType } from '@/utils/translate-toast-type';
 
 const els = getElements();
 
 const populatePositionSelectOptions = () => {
   const prettifyName = (position: ToastPosition) => {
-    const [vertical, horizontal] = position.split('-');
-    const capitalizedVertical = vertical!.charAt(0).toUpperCase() + vertical!.slice(1);
-    const capitalizedHorizontal = horizontal!.charAt(0).toUpperCase() + horizontal!.slice(1);
-    return `${capitalizedVertical} ${capitalizedHorizontal}`;
+    switch (position) {
+      case 'top-right':
+        return i18n.t('positionTopRight');
+      case 'top-left':
+        return i18n.t('positionTopLeft');
+      case 'bottom-right':
+        return i18n.t('positionBottomRight');
+      case 'bottom-left':
+        return i18n.t('positionBottomLeft');
+      default:
+        return position; // Fallback to the raw value if not recognized
+    }
   };
   els.position.replaceChildren(
     ...TOAST_POSITIONS.map((p) => {
@@ -32,7 +41,7 @@ const buildToastColorRows = () => {
   els.colors.innerHTML = TOAST_TYPES.map(
     (type) => `
       <div class="grid grid-cols-[4rem_1fr_1fr_1fr] items-center gap-3">
-        <span class="font-medium capitalize">${type}</span>
+        <span class="font-medium">${translateToastType(type)}</span>
         <label class="flex items-center gap-2 text-sm">
           <input type="color" data-type="${type}" data-field="background" class="h-8 w-10 cursor-pointer" />
           Background
@@ -67,8 +76,15 @@ const populateFormValues = (values: Values) => {
   cleanSaveState();
 };
 
-const populateTitle = () => {
+const populateStatic = () => {
   els.title.textContent = i18n.t('optionsTitle');
+  els.headerHeading.textContent = i18n.t('optionsHeaderHeading');
+  els.headerDescription.textContent = i18n.t('optionsHeaderDescription');
+  els.toastSettingsHeading.textContent = i18n.t('optionsToastSettingsHeading');
+  els.durationLabel.textContent = i18n.t('optionsToastDurationLabel');
+  els.positionLabel.textContent = i18n.t('optionsToastPositionLabel');
+  els.reset.textContent = i18n.t('optionsResetButton');
+  els.save.textContent = i18n.t('optionsSaveButton');
 };
 
 const transformFormValues = (): Values => {
@@ -107,19 +123,19 @@ const validateValues = (values: Values): Errors => {
   const d = values.toastDuration;
   // Duration must be a whole number between DURATION_MIN and DURATION_MAX (inclusive)
   if (els.duration.value.trim() === '' || !Number.isInteger(d) || d < DURATION_MIN || d > DURATION_MAX) {
-    errors.duration = `Enter a whole number between ${DURATION_MIN} and ${DURATION_MAX}.`;
+    errors.duration = i18n.t('optionsErrorDuration', [DURATION_MIN, DURATION_MAX]);
   }
 
   // Toast position must be one of the allowed values
   if (!TOAST_POSITIONS.includes(values.toastPosition)) {
-    errors.other = 'Invalid position.';
+    errors.other = i18n.t('optionsErrorPosition');
   }
 
   // All colors must be valid hex values
   const allColors = [...Object.values(values.toastBackgrounds), ...Object.values(values.toastColors)];
   const HEX_COLOR_REGEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i; // Allows both #RGB and #RRGGBB hex color formats
   if (!allColors.every((c) => HEX_COLOR_REGEX.test(c))) {
-    errors.other = 'All colors must be valid hex values (e.g. #16a34a or #fff).';
+    errors.other = i18n.t('optionsErrorColors');
   }
 
   return errors;
@@ -163,13 +179,13 @@ els.form.addEventListener('submit', async (event) => {
   showErrors(errors);
 
   if (errors.duration || errors.other) {
-    showStatus(errors.other ?? 'Please fix the highlighted field.', 'error');
+    showStatus(errors.other ?? i18n.t('optionsErrorFallback'), 'error');
     return;
   }
 
   await Promise.all((Object.keys(values) as (keyof Values)[]).map((key) => settings.set(key, values[key])));
   cleanSaveState();
-  showStatus('Settings saved.', 'success');
+  showStatus(i18n.t('optionsSettingsSaved'), 'success');
 });
 
 // When the reset (restore defaults) button is clicked, reset all settings to their default values
@@ -179,11 +195,11 @@ els.reset.addEventListener('click', async () => {
   populateFormValues(await settings.getAll());
   cleanSaveState();
   clearErrors();
-  showStatus('Defaults restored.', 'success');
+  showStatus(i18n.t('optionsSettingsReset'), 'success');
 });
 
 // Main
-populateTitle();
+populateStatic();
 populatePositionSelectOptions();
 buildToastColorRows();
 settings.getAll().then((values) => {

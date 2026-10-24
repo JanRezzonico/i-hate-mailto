@@ -24,3 +24,27 @@ popupToastDurationLabel: Duration
 popupToastPositionLabel: Position
 popupToastColorsLabel: Colors
 popupOpenOptionsButton: Open settings
+
+
+
+optionsHeaderHeading: Settings
+optionsHeaderDescription: Customize the toast shown when an email address is copied.
+optionsToastSettingsHeading: Toast Settings
+optionsToastDurationLabel: Duration (ms)
+optionsToastPositionLabel: Position
+optionsResetButton: Reset to defaults
+optionsSaveButton: Save
+optionsErrorDuration: Enter a whole number between $1 and $2.
+optionsErrorPosition: Invalid position.
+optionsErrorColors: All colors must be valid hex values.
+optionsErrorFallback: Please fix the highlighted field.
+optionsSettingsSaved: Settings saved successfully.
+optionsSettingsReset: Settings reset to defaults.
+
+
+
+
+positionTopRight: Top Right
+positionTopLeft: Top Left
+positionBottomRight: Bottom Right
+positionBottomLeft: Bottom Left

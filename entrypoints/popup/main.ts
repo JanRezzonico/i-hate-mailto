@@ -1,4 +1,5 @@
 import '@/assets/tailwind-daisyui.css';
+import { translateToastType } from '@/utils/translate-toast-type';
 
 type Values = Awaited<ReturnType<typeof settings.getAll>>;
 
@@ -20,19 +21,6 @@ const els = {
   positionLabel: $('#position-label'),
   colorsLabel: $('#colors-label'),
   openOptions: $<HTMLButtonElement>('#open-options'),
-};
-
-const translateToastType = (type: ToastType) => {
-  switch (type) {
-    case 'success':
-      return i18n.t('toastTypeSuccess');
-    case 'info':
-      return i18n.t('toastTypeInfo');
-    case 'error':
-      return i18n.t('toastTypeError');
-    default:
-      return type; // Fallback to english if there is any issue
-  }
 };
 
 function render(values: Values) {
