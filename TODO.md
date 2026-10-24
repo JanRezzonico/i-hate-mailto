@@ -8,7 +8,7 @@
 - [ ] (Maybe) Add option to do something else instead of copying the address (e.g., open a modal with the address, redirect to a webmail service, etc.)
 - [ ] Signal to user if subject or other parameters were truncated when copying the address
 
-## Tasks
+## Chores
 
 - [ ] Use daisyui popups for the toast previews instead of css styles **Note** be careful with shadow DOM and style bleeding
-- [ ] Permissions to only act onclick and not on everything in every page load
+- [ ] Permission narrowing if possible

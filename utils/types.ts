@@ -26,3 +26,13 @@ export const DEFAULT_TOAST_POSITION: ToastPosition = 'bottom-right';
 
 export type ToastEnabled = boolean;
 export const DEFAULT_TOAST_ENABLED: ToastEnabled = true;
+
+export interface DecodedMailto {
+  to: string[];
+  cc: string[];
+  bcc: string[];
+  subject?: string;
+  body?: string;
+  /** Any other headers (in-reply-to, references, ...), lowercased names. */
+  headers: Record<string, string>;
+}

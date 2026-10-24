@@ -1,5 +1,5 @@
 import copyToClipboard from '@/utils/copy-to-clipboard';
-import parseMailto from '@/utils/parse-mailto';
+import { decodeMailto, isMailtoHref } from '@/utils/parse-mailto';
 
 export default defineContentScript({
   matches: ['<all_urls>'],
@@ -17,14 +17,16 @@ export default defineContentScript({
         e.stopImmediatePropagation();
 
         const hrefValue = mailtoLink.getAttribute('href') ?? '';
-        const address = parseMailto(hrefValue);
-        if (!address) return; // Invalid mailto link, ignore
+        if (!isMailtoHref(hrefValue)) return; // Not a mailto link, ignore
 
-        const copySuccess = await copyToClipboard(address);
+        const decoded = decodeMailto(hrefValue);
+        const addresses = decoded.to.join(', ');
+
+        const copySuccess = await copyToClipboard(addresses);
         if (copySuccess) {
-          await showToast(i18n.t('copySuccess', [address]), 'success');
+          await showToast(i18n.t('copySuccess', [addresses]), 'success');
         } else {
-          await showToast(i18n.t('copyFail', [address]), 'error');
+          await showToast(i18n.t('copyFail', [addresses]), 'error');
         }
       },
       true, // Use capture phase to intercept before the page's own handlers
