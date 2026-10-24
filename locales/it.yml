@@ -5,8 +5,8 @@ extNameLong: I Hate Mailto di rezzonico.dev
 popupTitle: I Hate Mailto di rezzonico.dev
 optionsTitle: Opzioni - I Hate Mailto di rezzonico.dev
 
-copySuccess: '$1 copiato negli appunti'
-copyFail: 'Impossibile copiare $1 negli appunti'
+copySuccess: Copiato negli appunti con successo
+copyFail: Impossibile copiare negli appunti
 
 toastTypeSuccess: successo
 toastTypeInfo: info
@@ -17,6 +17,8 @@ text: Testo
 
 popupHeaderHeading: I Hate Mailto di rezzonico.dev
 popupHeaderDescription: Quando si clicca su un link mailto, l'indirizzo viene copiato negli appunti invece di aprire un'app di posta elettronica.
+popupGeneralSettingsHeading: Impostazioni generali
+popupCopyModeLabel: Modalità di copia
 popupToastSettingsHeading: Impostazioni dei toast
 popupToastDurationLabel: Durata
 popupToastPositionLabel: Posizione
@@ -25,6 +27,8 @@ popupOpenOptionsButton: Apri le impostazioni
 
 optionsHeaderHeading: Impostazioni
 optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo email viene copiato.
+optionsGeneralSettingsHeading: Impostazioni generali
+optionsCopyModeLabel: Modalità di copia
 optionsToastSettingsHeading: Impostazioni dei toast
 optionsToastDurationLabel: Durata (ms)
 optionsToastPositionLabel: Posizione
@@ -41,3 +45,11 @@ positionTopRight: In alto a destra
 positionTopLeft: In alto a sinistra
 positionBottomRight: In basso a destra
 positionBottomLeft: In basso a sinistra
+
+copyModeTo: To
+copyModeRecipients: Destinatari
+copyModeFull: Completo
+
+copyModeToDescription: Copia solo gli indirizzi "To" dal link mailto.
+copyModeRecipientsDescription: Copia tutti i destinatari dal link mailto, inclusi gli indirizzi "To", "Cc" e "Bcc".
+copyModeFullDescription: "Copia l'intero link mailto, inclusi tutti i parametri e i valori. Nota: questo copia sempre più righe, anche se c'è solo un destinatario."

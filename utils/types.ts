@@ -27,6 +27,10 @@ export const DEFAULT_TOAST_POSITION: ToastPosition = 'bottom-right';
 export type ToastEnabled = boolean;
 export const DEFAULT_TOAST_ENABLED: ToastEnabled = true;
 
+export type CopyMode = 'to' | 'recipients' | 'full';
+export const COPY_MODES: CopyMode[] = ['to', 'recipients', 'full'];
+export const DEFAULT_COPY_MODE: CopyMode = 'to';
+
 export interface DecodedMailto {
   to: string[];
   cc: string[];

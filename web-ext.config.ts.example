@@ -1,0 +1,10 @@
+// Remove the `.example` suffix to use this file as your web-ext config
+// to support language changes in development mode.
+
+import { defineWebExtConfig } from 'wxt';
+
+const lang = process.env.DEV_LANG ?? 'en';
+
+export default defineWebExtConfig({
+  chromiumArgs: [`--lang=${lang}`],
+});

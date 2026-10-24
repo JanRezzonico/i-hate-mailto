@@ -20,13 +20,14 @@ export default defineContentScript({
         if (!isMailtoHref(hrefValue)) return; // Not a mailto link, ignore
 
         const decoded = decodeMailto(hrefValue);
-        const addresses = decoded.to.join(', ');
 
-        const copySuccess = await copyToClipboard(addresses);
+        // TODO: handle other fields
+
+        const copySuccess = await copyToClipboard(decoded);
         if (copySuccess) {
-          await showToast(i18n.t('copySuccess', [addresses]), 'success');
+          await showToast(i18n.t('copySuccess'), 'success');
         } else {
-          await showToast(i18n.t('copyFail', [addresses]), 'error');
+          await showToast(i18n.t('copyFail'), 'error');
         }
       },
       true, // Use capture phase to intercept before the page's own handlers

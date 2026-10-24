@@ -5,8 +5,8 @@ extNameLong: I Hate Mailto by rezzonico.dev
 popupTitle: I Hate Mailto by rezzonico.dev
 optionsTitle: Options - I Hate Mailto by rezzonico.dev
 
-copySuccess: Copied $1 to clipboard
-copyFail: Failed to copy $1 to clipboard
+copySuccess: Copied to clipboard successfully
+copyFail: Failed to copy to clipboard
 
 toastTypeSuccess: success
 toastTypeInfo: info
@@ -17,6 +17,8 @@ text: Text
 
 popupHeaderHeading: I Hate Mailto by rezzonico.dev
 popupHeaderDescription: Clicking a mailto link copies the address to your clipboard instead of opening a mail app.
+popupGeneralSettingsHeading: General Settings
+popupCopyModeLabel: Copy mode
 popupToastSettingsHeading: Toast Settings
 popupToastDurationLabel: Duration
 popupToastPositionLabel: Position
@@ -25,6 +27,8 @@ popupOpenOptionsButton: Open settings
 
 optionsHeaderHeading: Settings
 optionsHeaderDescription: Customize the toast shown when an email address is copied.
+optionsGeneralSettingsHeading: General Settings
+optionsCopyModeLabel: Copy mode
 optionsToastSettingsHeading: Toast Settings
 optionsToastDurationLabel: Duration (ms)
 optionsToastPositionLabel: Position
@@ -41,3 +45,11 @@ positionTopRight: Top Right
 positionTopLeft: Top Left
 positionBottomRight: Bottom Right
 positionBottomLeft: Bottom Left
+
+copyModeTo: To
+copyModeRecipients: Recipients
+copyModeFull: Full
+
+copyModeToDescription: Copies only the "To" addresses from the mailto link.
+copyModeRecipientsDescription: Copies all recipients from the mailto link, including "To", "Cc", and "Bcc" addresses.
+copyModeFullDescription: 'Copies the entire mailto link, including all parameters and values. Note: this always copies multiple lines, even if there is only one recipient.'

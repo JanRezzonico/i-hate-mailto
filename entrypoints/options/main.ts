@@ -11,6 +11,7 @@ import {
 import { type Errors, type Values } from './utils/types';
 import { translateToastType } from '@/utils/translate-toast-type';
 import { translateToastPosition } from '@/utils/translate-toast-position';
+import { translateCopyMode } from '@/utils/translate-copy-mode';
 
 const els = getElements();
 
@@ -21,6 +22,20 @@ const populatePositionSelectOptions = () => {
       return new Option(prettyName, p);
     }),
   );
+};
+
+const populateCopyModeSelectOptions = () => {
+  els.copyMode.replaceChildren(
+    ...COPY_MODES.map((mode) => {
+      const prettyName = translateCopyMode(mode);
+      return new Option(prettyName, mode);
+    }),
+  );
+};
+
+const populateSelectOptions = () => {
+  populatePositionSelectOptions();
+  populateCopyModeSelectOptions();
 };
 
 const buildToastColorRows = () => {
@@ -69,6 +84,14 @@ const populateStatic = () => {
   els.title.textContent = i18n.t('optionsTitle');
   els.headerHeading.textContent = i18n.t('optionsHeaderHeading');
   els.headerDescription.textContent = i18n.t('optionsHeaderDescription');
+  els.generalSettingsHeading.textContent = i18n.t('optionsGeneralSettingsHeading');
+  els.copyModeLabel.textContent = i18n.t('optionsCopyModeLabel');
+  els.copyModeToLabel.textContent = translateCopyMode('to');
+  els.copyModeToDescription.textContent = i18n.t('copyModeToDescription');
+  els.copyModeRecipientsLabel.textContent = translateCopyMode('recipients');
+  els.copyModeRecipientsDescription.textContent = i18n.t('copyModeRecipientsDescription');
+  els.copyModeFullLabel.textContent = translateCopyMode('full');
+  els.copyModeFullDescription.textContent = i18n.t('copyModeFullDescription');
   els.toastSettingsHeading.textContent = i18n.t('optionsToastSettingsHeading');
   els.durationLabel.textContent = i18n.t('optionsToastDurationLabel');
   els.positionLabel.textContent = i18n.t('optionsToastPositionLabel');
@@ -84,6 +107,7 @@ const transformFormValues = (): Values => {
     >;
 
   return {
+    copyMode: els.copyMode.value as CopyMode,
     toastDuration: Number(els.duration.value),
     toastPosition: els.position.value as ToastPosition,
     toastBackgrounds: pick('background'),
@@ -189,7 +213,7 @@ els.reset.addEventListener('click', async () => {
 
 // Main
 populateStatic();
-populatePositionSelectOptions();
+populateSelectOptions();
 buildToastColorRows();
 settings.getAll().then((values) => {
   populateFormValues(values);

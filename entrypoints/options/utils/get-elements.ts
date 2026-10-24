@@ -19,6 +19,15 @@ export const getElements = () => ({
   toastSettingsHeading: $('#toast-settings-heading'),
   durationLabel: $('#duration-label'),
   positionLabel: $('#position-label'),
+  generalSettingsHeading: $('#general-settings-heading'),
+  copyModeLabel: $('#copy-mode-label'),
+  copyMode: $<HTMLSelectElement>('#copy-mode'),
+  copyModeToLabel: $('#copy-mode-to-label'),
+  copyModeToDescription: $('#copy-mode-to-description'),
+  copyModeRecipientsLabel: $('#copy-mode-recipients-label'),
+  copyModeRecipientsDescription: $('#copy-mode-recipients-description'),
+  copyModeFullLabel: $('#copy-mode-full-label'),
+  copyModeFullDescription: $('#copy-mode-full-description'),
 });
 
 export const getPreviewElement = (type: ToastType) => {

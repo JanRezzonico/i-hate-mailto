@@ -16,6 +16,40 @@
       <form id="form" novalidate class="space-y-6">
         <section class="card bg-base-100 shadow-sm">
           <div class="card-body gap-4">
+            <h2 class="card-title" id="general-settings-heading"></h2>
+
+            <label class="form-control w-full">
+              <span class="label-text mb-1 font-medium" id="copy-mode-label"></span>
+              <select id="copy-mode" class="select select-bordered w-full capitalize"></select>
+            </label>
+            <div class="w-full border-l-2 bg-base-200 border-secondary p-2 rounded-sm flex flex-col gap-2">
+              <div>
+                <span id="copy-mode-to-label" class="font-bold"></span>
+                <p class="text-sm opacity-70" id="copy-mode-to-description"></p>
+              </div>
+              <div>
+                <span id="copy-mode-recipients-label" class="font-bold"></span>
+                <p class="text-sm opacity-70" id="copy-mode-recipients-description"></p>
+              </div>
+              <div>
+                <span id="copy-mode-full-label" class="font-bold"></span>
+                <p class="text-sm opacity-70" id="copy-mode-full-description"></p>
+              </div>
+              <div>
+                <a
+                  href="https://www.rfc-editor.org/info/rfc6068/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link link-secondary link-hover text-sm"
+                >
+                  RFC 6068 - The "mailto" URI Scheme
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="card bg-base-100 shadow-sm">
+          <div class="card-body gap-4">
             <h2 class="card-title" id="toast-settings-heading"></h2>
 
             <label class="form-control w-full">
@@ -33,12 +67,12 @@
           </div>
         </section>
 
-        <div id="status" role="alert" class="alert hidden"></div>
-
         <div class="flex justify-between">
-          <button id="reset" type="button" class="btn btn-ghost"></button>
-          <button id="save" type="submit" class="btn btn-primary" disabled></button>
+          <button id="reset" type="button" class="btn btn-outline btn-secondary"></button>
+          <button id="save" type="submit" class="btn btn-secondary" disabled></button>
         </div>
+
+        <div id="status" role="alert" class="alert hidden"></div>
       </form>
     </main>
 

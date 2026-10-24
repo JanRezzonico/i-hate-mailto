@@ -17,6 +17,9 @@ const els = {
   title: $('#title'),
   headerHeading: $('#header-heading'),
   headerDescription: $('#header-description'),
+  generalSettingsHeading: $('#general-settings-heading'),
+  copyModeLabel: $('#copy-mode-label'),
+  copyMode: $('#copy-mode'),
   toastSettingsHeading: $('#toast-settings-heading'),
   durationLabel: $('#duration-label'),
   positionLabel: $('#position-label'),
@@ -28,6 +31,9 @@ function render(values: Values) {
   els.title.textContent = i18n.t('popupTitle');
   els.headerHeading.textContent = i18n.t('popupHeaderHeading');
   els.headerDescription.textContent = i18n.t('popupHeaderDescription');
+  els.generalSettingsHeading.textContent = i18n.t('popupGeneralSettingsHeading');
+  els.copyModeLabel.textContent = i18n.t('popupCopyModeLabel');
+  els.copyMode.textContent = translateCopyMode(values.copyMode);
   els.toastSettingsHeading.textContent = i18n.t('popupToastSettingsHeading');
   els.durationLabel.textContent = i18n.t('popupToastDurationLabel');
   els.positionLabel.textContent = i18n.t('popupToastPositionLabel');
