@@ -5,6 +5,7 @@ function $<T extends HTMLElement>(selector: string): T {
 }
 
 export const getElements = () => ({
+  title: $('#title'),
   form: $<HTMLFormElement>('#form'),
   duration: $<HTMLInputElement>('#duration'),
   save: $<HTMLButtonElement>('#save'),

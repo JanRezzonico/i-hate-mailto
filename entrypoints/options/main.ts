@@ -67,6 +67,10 @@ const populateFormValues = (values: Values) => {
   cleanSaveState();
 };
 
+const populateTitle = () => {
+  els.title.textContent = i18n.t('optionsTitle');
+};
+
 const transformFormValues = (): Values => {
   const pick = (field: 'background' | 'text') =>
     Object.fromEntries(TOAST_TYPES.map((type) => [type, getColorInput(type, field).value])) as Record<
@@ -179,6 +183,9 @@ els.reset.addEventListener('click', async () => {
 });
 
 // Main
+populateTitle();
 populatePositionSelectOptions();
 buildToastColorRows();
-settings.getAll().then(populateFormValues);
+settings.getAll().then((values) => {
+  populateFormValues(values);
+});

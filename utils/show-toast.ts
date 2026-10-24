@@ -80,7 +80,7 @@ const createToastElement = (message: string, type: ToastType, config: ToastSetti
 
   const content = document.createElement('div');
   content.className = 'content';
-  content.append(createTextElement('header', 'I Hate Mailto by rezzonico.dev'), createTextElement('message', message));
+  content.append(createTextElement('header', i18n.t('extNameLong')), createTextElement('message', message));
 
   toast.append(createTextElement('icon', ICONS[type]), content);
   return toast;

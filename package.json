@@ -1,6 +1,5 @@
 {
-  "name": "I Hate Mailto",
-  "description": "I Hate Mailto is a simple browser extension that intercepts mailto links and copies the address to the clipboard instead of opening the default email client.",
+  "name": "i-hate-mailto",
   "author": {
     "email": "i-hate-mailto@rezzonico.dev",
     "name": "rezzonico.dev",
@@ -28,5 +27,8 @@
     "vite": "^8.1.5",
     "web-ext": "^10.5.0",
     "wxt": "^0.21.3"
+  },
+  "dependencies": {
+    "@wxt-dev/i18n": "^0.2.8"
   }
 }

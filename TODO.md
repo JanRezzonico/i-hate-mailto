@@ -12,3 +12,4 @@
 ## Tasks
 
 - [ ] Use daisyui popups for the toast previews instead of css styles **Note** be careful with shadow DOM and style bleeding
+- [ ] Permissions to only act onclick and not on everything in every page load

@@ -12,10 +12,25 @@ const els = {
   duration: $('#duration'),
   position: $('#position'),
   swatches: $('#swatches'),
+  title: $('#title'),
+  headerHeading: $('#header-heading'),
+  headerDescription: $('#header-description'),
+  toastSettingsHeading: $('#toast-settings-heading'),
+  durationLabel: $('#duration-label'),
+  positionLabel: $('#position-label'),
+  colorsLabel: $('#colors-label'),
   openOptions: $<HTMLButtonElement>('#open-options'),
 };
 
 function render(values: Values) {
+  els.title.textContent = i18n.t('popupTitle');
+  els.headerHeading.textContent = i18n.t('popupHeaderHeading');
+  els.headerDescription.textContent = i18n.t('popupHeaderDescription');
+  els.toastSettingsHeading.textContent = i18n.t('popupToastSettingsHeading');
+  els.durationLabel.textContent = i18n.t('popupToastDurationLabel');
+  els.positionLabel.textContent = i18n.t('popupToastPositionLabel');
+  els.colorsLabel.textContent = i18n.t('popupToastColorsLabel');
+  els.openOptions.textContent = i18n.t('popupOpenOptionsButton');
   els.duration.textContent = `${values.toastDuration} ms`;
   els.position.textContent = values.toastPosition.replace('-', ' ');
 
