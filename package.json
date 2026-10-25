@@ -18,6 +18,7 @@
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "dev:lang-it": "DEV_LANG=it wxt",
+    "dev:lang-fr": "DEV_LANG=fr wxt",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",

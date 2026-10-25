@@ -15,23 +15,19 @@ toastTypeError: errore
 background: Sfondo
 text: Testo
 
+generalSettingsHeading: Impostazioni generali
+copyModeLabel: Modalità di copia
+toastSettingsHeading: Impostazioni dei toast
+toastDurationLabel: Durata (ms)
+toastPositionLabel: Posizione
+
 popupHeaderHeading: I Hate Mailto di rezzonico.dev
 popupHeaderDescription: Quando si clicca su un link mailto, l'indirizzo viene copiato negli appunti invece di aprire un'app di posta elettronica.
-popupGeneralSettingsHeading: Impostazioni generali
-popupCopyModeLabel: Modalità di copia
-popupToastSettingsHeading: Impostazioni dei toast
-popupToastDurationLabel: Durata
-popupToastPositionLabel: Posizione
 popupToastColorsLabel: Colori
 popupOpenOptionsButton: Apri le impostazioni
 
 optionsHeaderHeading: Impostazioni
 optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo email viene copiato.
-optionsGeneralSettingsHeading: Impostazioni generali
-optionsCopyModeLabel: Modalità di copia
-optionsToastSettingsHeading: Impostazioni dei toast
-optionsToastDurationLabel: Durata (ms)
-optionsToastPositionLabel: Posizione
 optionsResetButton: Ripristina i valori predefiniti
 optionsSaveButton: Salva
 optionsErrorDuration: Inserisci un numero intero compreso tra $1 e $2.

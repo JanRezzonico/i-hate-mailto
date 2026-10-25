@@ -17,3 +17,4 @@ export const settings = defineSettings({
 });
 
 export type Settings = typeof settings.defaults;
+export type SettingsKey = keyof Settings;

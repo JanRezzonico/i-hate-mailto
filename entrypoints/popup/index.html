@@ -1,43 +1,48 @@
 <!doctype html>
-<html lang="en" data-theme="i-hate-mailto">
+<html data-theme="i-hate-mailto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="manifest.type" content="browser_action" />
     <link rel="icon" type="image/svg+xml" href="/assets/i-hate-mailto.svg" />
-    <title id="title"></title>
+    <title data-i18n="popupTitle"></title>
   </head>
   <body class="w-80">
     <main class="p-4 space-y-4">
       <header class="space-y-1">
-        <h1 class="text-lg font-bold" id="header-heading"></h1>
-        <p class="text-xs opacity-70" id="header-description"></p>
+        <h1 class="text-lg font-bold" data-i18n="popupHeaderHeading"></h1>
+        <p class="text-xs opacity-70" data-i18n="popupHeaderDescription"></p>
       </header>
-      <h2 class="card-title" id="general-settings-heading"></h2>
+      <h2 class="card-title" data-i18n="generalSettingsHeading"></h2>
       <dl class="space-y-2 text-sm">
         <div class="flex justify-between">
-          <dt class="opacity-70" id="copy-mode-label"></dt>
+          <dt class="opacity-70" data-i18n="copyModeLabel"></dt>
           <dd id="copy-mode" class="font-medium capitalize badge badge-secondary"></dd>
         </div>
       </dl>
 
-      <h2 class="card-title" id="toast-settings-heading"></h2>
+      <h2 class="card-title" data-i18n="toastSettingsHeading"></h2>
       <dl class="space-y-2 text-sm">
         <div class="flex justify-between">
-          <dt class="opacity-70" id="duration-label"></dt>
+          <dt class="opacity-70" data-i18n="toastDurationLabel"></dt>
           <dd id="duration" class="font-medium"></dd>
         </div>
         <div class="flex justify-between">
-          <dt class="opacity-70" id="position-label"></dt>
+          <dt class="opacity-70" data-i18n="toastPositionLabel"></dt>
           <dd id="position" class="font-medium capitalize"></dd>
         </div>
         <div class="flex justify-between items-center">
-          <dt class="opacity-70" id="colors-label"></dt>
-          <dd id="swatches" class="flex gap-1"></dd>
+          <dt class="opacity-70" data-i18n="popupToastColorsLabel"></dt>
+          <dd id="badges" class="flex gap-1"></dd>
         </div>
       </dl>
 
-      <button id="open-options" type="button" class="btn btn-secondary btn-block"></button>
+      <button
+        id="open-options-button"
+        type="button"
+        class="btn btn-block btn-secondary"
+        data-i18n="popupOpenOptionsButton"
+      ></button>
     </main>
 
     <script type="module" src="./main.ts"></script>

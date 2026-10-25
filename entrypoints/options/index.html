@@ -1,41 +1,30 @@
 <!doctype html>
-<html lang="en" data-theme="i-hate-mailto">
+<html data-theme="i-hate-mailto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="manifest.open_in_tab" content="true" />
     <link rel="icon" type="image/svg+xml" href="/assets/i-hate-mailto.svg" />
-    <title id="title"></title>
+    <title data-i18n="optionsTitle"></title>
   </head>
   <body class="min-h-screen bg-base-200">
     <main class="mx-auto max-w-2xl p-6 space-y-6">
       <header>
-        <h1 class="text-2xl font-bold" id="header-heading"></h1>
-        <p class="opacity-70" id="header-description"></p>
+        <h1 class="text-2xl font-bold" data-i18n="optionsHeaderHeading"></h1>
+        <p class="opacity-70" data-i18n="optionsHeaderDescription"></p>
       </header>
 
       <form id="form" novalidate class="space-y-6">
         <section class="card bg-base-100 shadow-sm">
           <div class="card-body gap-4">
-            <h2 class="card-title" id="general-settings-heading"></h2>
+            <h2 class="card-title" data-i18n="generalSettingsHeading"></h2>
 
             <label class="form-control w-full">
-              <span class="label-text mb-1 font-medium" id="copy-mode-label"></span>
+              <span class="label-text mb-1 font-medium" data-i18n="copyModeLabel"></span>
               <select id="copy-mode" class="select select-secondary w-full capitalize"></select>
             </label>
             <div class="w-full border-l-2 bg-base-200 border-secondary p-2 rounded-sm flex flex-col gap-2">
-              <div>
-                <span id="copy-mode-to-label" class="font-bold"></span>
-                <p class="text-sm opacity-70" id="copy-mode-to-description"></p>
-              </div>
-              <div>
-                <span id="copy-mode-recipients-label" class="font-bold"></span>
-                <p class="text-sm opacity-70" id="copy-mode-recipients-description"></p>
-              </div>
-              <div>
-                <span id="copy-mode-full-label" class="font-bold"></span>
-                <p class="text-sm opacity-70" id="copy-mode-full-description"></p>
-              </div>
+              <div id="copy-mode-descriptions" class="flex flex-col gap-2"></div>
               <div>
                 <a
                   href="https://www.rfc-editor.org/info/rfc6068/"
@@ -51,16 +40,16 @@
         </section>
         <section class="card bg-base-100 shadow-sm">
           <div class="card-body gap-4">
-            <h2 class="card-title" id="toast-settings-heading"></h2>
+            <h2 class="card-title" data-i18n="toastSettingsHeading"></h2>
 
             <label class="form-control w-full">
-              <span class="label-text mb-1 font-medium" id="duration-label"></span>
+              <span class="label-text mb-1 font-medium" data-i18n="toastDurationLabel"></span>
               <input id="duration" type="number" step="250" class="input input-secondary w-full" />
               <span id="duration-error" class="mt-1 hidden text-sm text-error"></span>
             </label>
 
             <label class="form-control w-full">
-              <span class="label-text mb-1 font-medium" id="position-label"></span>
+              <span class="label-text mb-1 font-medium" data-i18n="toastPositionLabel"></span>
               <select id="position" class="select select-secondary w-full capitalize"></select>
             </label>
             <div class="divider my-0"></div>
@@ -69,13 +58,40 @@
         </section>
 
         <div class="flex justify-between">
-          <button id="reset" type="button" class="btn btn-outline btn-secondary"></button>
-          <button id="save" type="submit" class="btn btn-secondary" disabled></button>
+          <button
+            id="reset"
+            type="button"
+            class="btn btn-outline btn-secondary"
+            data-i18n="optionsResetButton"
+          ></button>
+          <button id="save" type="submit" class="btn btn-secondary" data-i18n="optionsSaveButton" disabled></button>
         </div>
 
         <div id="status" role="alert" class="alert hidden"></div>
       </form>
     </main>
+
+    <template id="copy-mode-description-template">
+      <div>
+        <span class="font-bold" data-role="label"></span>
+        <p class="text-sm opacity-70" data-role="description"></p>
+      </div>
+    </template>
+
+    <template id="color-row-template">
+      <div class="grid grid-cols-[4rem_1fr_1fr_1fr] items-center gap-3">
+        <span class="font-medium capitalize" data-role="type"></span>
+        <label class="flex items-center gap-2 text-sm">
+          <input type="color" data-field="background" class="h-8 w-10 cursor-pointer" />
+          <span data-i18n="background"></span>
+        </label>
+        <label class="flex items-center gap-2 text-sm">
+          <input type="color" data-field="text" class="h-8 w-10 cursor-pointer" />
+          <span data-i18n="text"></span>
+        </label>
+        <div data-role="preview" class="rounded-md px-3 py-1.5 text-center text-sm capitalize"></div>
+      </div>
+    </template>
 
     <script type="module" src="./main.ts"></script>
   </body>

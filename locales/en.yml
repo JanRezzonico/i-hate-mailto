@@ -15,23 +15,19 @@ toastTypeError: error
 background: Background
 text: Text
 
+generalSettingsHeading: General Settings
+copyModeLabel: Copy Mode
+toastSettingsHeading: Toast Settings
+toastDurationLabel: Duration (ms)
+toastPositionLabel: Position
+
 popupHeaderHeading: I Hate Mailto by rezzonico.dev
 popupHeaderDescription: Clicking a mailto link copies the address to your clipboard instead of opening a mail app.
-popupGeneralSettingsHeading: General Settings
-popupCopyModeLabel: Copy mode
-popupToastSettingsHeading: Toast Settings
-popupToastDurationLabel: Duration
-popupToastPositionLabel: Position
 popupToastColorsLabel: Colors
 popupOpenOptionsButton: Open settings
 
 optionsHeaderHeading: Settings
 optionsHeaderDescription: Customize the toast shown when an email address is copied.
-optionsGeneralSettingsHeading: General Settings
-optionsCopyModeLabel: Copy mode
-optionsToastSettingsHeading: Toast Settings
-optionsToastDurationLabel: Duration (ms)
-optionsToastPositionLabel: Position
 optionsResetButton: Reset to defaults
 optionsSaveButton: Save
 optionsErrorDuration: Enter a whole number between $1 and $2.
