@@ -18,7 +18,9 @@ text: Testo
 generalSettingsHeading: Impostazioni generali
 copyModeLabel: Modalità di copia
 toastSettingsHeading: Impostazioni dei toast
-toastDurationLabel: Durata (ms)
+toastDurationMinLabel: Durata minima (ms)
+toastDurationMaxLabel: Durata massima (ms)
+toastDurationRangeLabel: Intervallo di durata (ms)
 toastPositionLabel: Posizione
 
 popupHeaderHeading: I Hate Mailto di rezzonico.dev
@@ -31,6 +33,7 @@ optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo
 optionsResetButton: Ripristina i valori predefiniti
 optionsSaveButton: Salva
 optionsErrorDuration: Inserisci un numero intero compreso tra $1 e $2.
+optionsErrorDurationOrder: La durata minima non può superare la durata massima.
 optionsErrorPosition: Posizione non valida.
 optionsErrorColors: Tutti i colori devono essere valori esadecimali validi.
 optionsErrorFallback: Correggi il campo evidenziato.

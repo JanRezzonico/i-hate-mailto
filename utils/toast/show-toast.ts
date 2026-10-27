@@ -1,5 +1,6 @@
 import { settings } from '@/utils/settings/settings';
 import { ANIMATION_OPTIONS, slideKeyframes } from './animation';
+import { computeToastDuration } from './compute-info-toast-duration';
 import { createToastElement } from './create-toast-element';
 import { POSITION_CLASSES, TOAST_STYLES } from './styles';
 import type { ToastPosition, ToastType } from './types';
@@ -30,14 +31,18 @@ const getToastContainer = (position: ToastPosition): ToastContainer => {
   return container;
 };
 
-const showToast = async (message: string, notes: string, type: ToastType = 'info', duration?: number) => {
+const showToast = async (message: string, notes: string, type: ToastType = 'info') => {
   const config = await settings.getAll();
   const position = config.toastPosition;
   const container = getToastContainer(position);
   const toast = createToastElement(message, notes, type, config);
   container.element.appendChild(toast);
 
-  let remaining = duration ?? config.toastDuration;
+  let remaining = computeToastDuration(
+    [message, notes].filter((s) => !!s).join('\n'),
+    config.toastDurationMin,
+    config.toastDurationMax,
+  );
   let timer: ReturnType<typeof setTimeout> | undefined;
   let startedAt = Date.now();
   let dismissed = false;

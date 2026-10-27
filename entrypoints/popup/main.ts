@@ -17,7 +17,7 @@ const page = {
 
 const render = (values: Settings) => {
   page.copyMode.textContent = translateCopyMode(values.copyMode);
-  page.duration.textContent = `${values.toastDuration} ms`;
+  page.duration.textContent = `${values.toastDurationMin}-${values.toastDurationMax} ms`;
   page.position.textContent = translateToastPosition(values.toastPosition);
 
   page.badges.replaceChildren(

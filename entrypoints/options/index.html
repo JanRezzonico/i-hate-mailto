@@ -42,11 +42,17 @@
           <div class="card-body gap-4">
             <h2 class="card-title" data-i18n="toastSettingsHeading"></h2>
 
-            <label class="form-control w-full">
-              <span class="label-text mb-1 font-medium" data-i18n="toastDurationLabel"></span>
-              <input id="duration" type="number" step="250" class="input input-secondary w-full" />
-              <span id="duration-error" class="mt-1 hidden text-sm text-error"></span>
-            </label>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="form-control w-full">
+                <span class="label-text mb-1 font-medium" data-i18n="toastDurationMinLabel"></span>
+                <input id="duration-min" type="number" step="250" class="input input-secondary w-full" />
+              </label>
+              <label class="form-control w-full">
+                <span class="label-text mb-1 font-medium" data-i18n="toastDurationMaxLabel"></span>
+                <input id="duration-max" type="number" step="250" class="input input-secondary w-full" />
+              </label>
+            </div>
+            <span id="duration-error" class="mt-1 hidden text-sm text-error"></span>
 
             <label class="form-control w-full">
               <span class="label-text mb-1 font-medium" data-i18n="toastPositionLabel"></span>

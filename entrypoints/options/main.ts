@@ -11,7 +11,7 @@ import type { CopyMode } from '@/utils/clipboard/types';
 import type { Settings, SettingsKey } from '@/utils/settings/settings';
 import { translateCopyModeDescription } from '@/utils/clipboard/translate-copy-mode-description';
 
-type Errors = { duration?: string; other?: string };
+type Errors = { durationMin?: string; durationMax?: string; other?: string };
 
 const page = {
   form: $<HTMLFormElement>('#form'),
@@ -19,7 +19,8 @@ const page = {
   copyModeSelect: $<HTMLSelectElement>('#copy-mode'),
   copyModeDescriptions: $('#copy-mode-descriptions'),
 
-  duration: $<HTMLInputElement>('#duration'),
+  durationMin: $<HTMLInputElement>('#duration-min'),
+  durationMax: $<HTMLInputElement>('#duration-max'),
   durationError: $('#duration-error'),
 
   positionSelect: $<HTMLSelectElement>('#position'),
@@ -87,7 +88,8 @@ const updateToastPreviews = () => {
 const populateFormValues = (values: Settings) => {
   page.copyModeSelect.value = values.copyMode;
   page.positionSelect.value = values.toastPosition;
-  page.duration.value = String(values.toastDuration);
+  page.durationMin.value = String(values.toastDurationMin);
+  page.durationMax.value = String(values.toastDurationMax);
   for (const type of TOAST_TYPES) {
     colorRows[type].background.value = values.toastBackgrounds[type];
     colorRows[type].text.value = values.toastColors[type];
@@ -102,7 +104,8 @@ const transformFormValues = (): Settings => {
 
   return {
     copyMode: page.copyModeSelect.value as CopyMode,
-    toastDuration: Number(page.duration.value),
+    toastDurationMin: Number(page.durationMin.value),
+    toastDurationMax: Number(page.durationMax.value),
     toastPosition: page.positionSelect.value as ToastPosition,
     toastBackgrounds: pick('background'),
     toastColors: pick('text'),
@@ -126,10 +129,26 @@ const cleanSaveState = () => {
 const validateValues = (values: Settings): Errors => {
   const errors: Errors = {};
 
-  const d = values.toastDuration;
-  // Duration must be a whole number between TOAST_DURATION_MIN and TOAST_DURATION_MAX (inclusive)
-  if (page.duration.value.trim() === '' || !Number.isInteger(d) || d < TOAST_DURATION_MIN || d > TOAST_DURATION_MAX) {
-    errors.duration = i18n.t('optionsErrorDuration', [TOAST_DURATION_MIN, TOAST_DURATION_MAX]);
+  const min = values.toastDurationMin;
+  const max = values.toastDurationMax;
+  const minInvalid =
+    page.durationMin.value.trim() === '' ||
+    !Number.isInteger(min) ||
+    min < TOAST_DURATION_MIN ||
+    min > TOAST_DURATION_MAX;
+  const maxInvalid =
+    page.durationMax.value.trim() === '' ||
+    !Number.isInteger(max) ||
+    max < TOAST_DURATION_MIN ||
+    max > TOAST_DURATION_MAX;
+  if (minInvalid) {
+    errors.durationMin = i18n.t('optionsErrorDuration', [TOAST_DURATION_MIN, TOAST_DURATION_MAX]);
+  }
+  if (maxInvalid) {
+    errors.durationMax = i18n.t('optionsErrorDuration', [TOAST_DURATION_MIN, TOAST_DURATION_MAX]);
+  }
+  if (!minInvalid && !maxInvalid && min > max) {
+    errors.other = i18n.t('optionsErrorDurationOrder');
   }
 
   // Toast position must be one of the allowed values
@@ -148,9 +167,10 @@ const validateValues = (values: Settings): Errors => {
 };
 
 const showErrors = (errors: Errors) => {
-  page.durationError.textContent = errors.duration ?? '';
-  page.durationError.classList.toggle('hidden', !errors.duration);
-  page.duration.classList.toggle('input-error', !!errors.duration);
+  page.durationError.textContent = errors.durationMin ?? errors.durationMax ?? errors.other ?? '';
+  page.durationError.classList.toggle('hidden', !errors.durationMin && !errors.durationMax && !errors.other);
+  page.durationMin.classList.toggle('input-error', !!errors.durationMin || !!errors.other);
+  page.durationMax.classList.toggle('input-error', !!errors.durationMax || !!errors.other);
 };
 
 const clearErrors = () => {
@@ -190,7 +210,7 @@ page.form.addEventListener('submit', async (event) => {
   const errors = validateValues(values);
   showErrors(errors);
 
-  if (errors.duration || errors.other) {
+  if (errors.durationMin || errors.durationMax || errors.other) {
     showStatus(errors.other ?? i18n.t('optionsErrorFallback'), 'error');
     return;
   }
@@ -216,6 +236,8 @@ page.resetButton.addEventListener('click', async () => {
 localizeDocument();
 populateSelectOptions();
 buildCopyModeDescriptions();
-page.duration.min = String(TOAST_DURATION_MIN);
-page.duration.max = String(TOAST_DURATION_MAX);
+page.durationMin.min = String(TOAST_DURATION_MIN);
+page.durationMin.max = String(TOAST_DURATION_MAX);
+page.durationMax.min = String(TOAST_DURATION_MIN);
+page.durationMax.max = String(TOAST_DURATION_MAX);
 settings.getAll().then(populateFormValues);

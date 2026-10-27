@@ -18,7 +18,9 @@ text: Text
 generalSettingsHeading: General Settings
 copyModeLabel: Copy Mode
 toastSettingsHeading: Toast Settings
-toastDurationLabel: Duration (ms)
+toastDurationMinLabel: Minimum duration (ms)
+toastDurationMaxLabel: Maximum duration (ms)
+toastDurationRangeLabel: Duration range (ms)
 toastPositionLabel: Position
 
 popupHeaderHeading: I Hate Mailto by rezzonico.dev
@@ -31,6 +33,7 @@ optionsHeaderDescription: Customize the toast shown when an email address is cop
 optionsResetButton: Reset to defaults
 optionsSaveButton: Save
 optionsErrorDuration: Enter a whole number between $1 and $2.
+optionsErrorDurationOrder: Minimum duration must not exceed maximum duration.
 optionsErrorPosition: Invalid position.
 optionsErrorColors: All colors must be valid hex values.
 optionsErrorFallback: Please fix the highlighted field.

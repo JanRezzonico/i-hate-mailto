@@ -2,8 +2,6 @@ import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
 import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
 import { translateCopyFailedMessage } from '@/utils/clipboard/translate-copy-failed-message';
 import { decodeMailto, isMailtoHref } from '@/utils/mailto/parse-mailto';
-import { settings } from '@/utils/settings/settings';
-import { computeInfoToastDuration } from '@/utils/toast/compute-info-toast-duration';
 import showToast from '@/utils/toast/show-toast';
 
 export default defineContentScript({
@@ -38,8 +36,7 @@ export default defineContentScript({
           if (result.notCopied) {
             const base = i18n.t('copyPartial');
             const notes = formatNotCopied(result.notCopied);
-            const toastDuration = computeInfoToastDuration(await settings.get('toastDuration'), notes);
-            await showToast(base, notes, 'info', toastDuration);
+            await showToast(base, notes, 'info');
           } else {
             const notes = '';
             await showToast(i18n.t('copySuccess'), notes, 'success');
