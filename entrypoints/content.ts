@@ -2,6 +2,7 @@ import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
 import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
 import { translateCopyFailedMessage } from '@/utils/clipboard/translate-copy-failed-message';
 import { decodeMailto, isMailtoHref } from '@/utils/mailto/parse-mailto';
+import { disabledSites, isDomainDisabled } from '@/utils/settings/disabled-sites';
 import showToast from '@/utils/toast/show-toast';
 
 export default defineContentScript({
@@ -11,10 +12,17 @@ export default defineContentScript({
   matchOriginAsFallback: true, // Extend behavior to iframes with different origins
   runAt: 'document_start',
 
-  main() {
+  async main() {
+    let thisDomainIsDisabled = await isDomainDisabled(location.hostname);
+    disabledSites.watch('domains', async () => {
+      thisDomainIsDisabled = await isDomainDisabled(location.hostname);
+    });
+
     document.addEventListener(
       'click',
       async (e) => {
+        if (thisDomainIsDisabled) return;
+
         const mailtoLink = e
           .composedPath() // Also includes shadow DOM elements
           .find(

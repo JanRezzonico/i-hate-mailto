@@ -27,6 +27,12 @@ popupHeaderHeading: I Hate Mailto by rezzonico.dev
 popupHeaderDescription: Clicking a mailto link copies the address to your clipboard instead of opening a mail app.
 popupToastColorsLabel: Colors
 popupOpenOptionsButton: Open settings
+popupSiteSettingsHeading: Current site
+popupSiteStatusEnabled: Enabled
+popupSiteStatusDisabled: Disabled
+popupDisableSiteButton: Disable on $1
+popupEnableSiteButton: Enable on $1
+popupSiteUnavailable: Not supported on this site
 
 optionsHeaderHeading: Settings
 optionsHeaderDescription: Customize the toast shown when an email address is copied.
@@ -39,6 +45,11 @@ optionsErrorColors: All colors must be valid hex values.
 optionsErrorFallback: Please fix the highlighted field.
 optionsSettingsSaved: Settings saved successfully.
 optionsSettingsReset: Settings reset to defaults.
+disabledSitesHeading: Disabled websites
+disabledSitesDescription: Mailto links are left untouched on these exact domains. Subdomains are treated separately.
+disabledSitesEmpty: No websites are disabled.
+disabledSitesRemoveAllButton: Remove all disabled websites
+disabledSitesRemoved: Disabled websites removed.
 
 positionTopRight: Top Right
 positionTopLeft: Top Left

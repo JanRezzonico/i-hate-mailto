@@ -63,6 +63,21 @@
           </div>
         </section>
 
+        <section class="card bg-base-100 shadow-sm">
+          <div class="card-body gap-4">
+            <h2 class="card-title" data-i18n="disabledSitesHeading"></h2>
+            <p class="text-sm opacity-70" data-i18n="disabledSitesDescription"></p>
+            <ul id="disabled-sites" class="list-disc pl-5 text-sm"></ul>
+            <p id="disabled-sites-empty" class="text-sm opacity-70" data-i18n="disabledSitesEmpty"></p>
+            <button
+              id="remove-disabled-sites"
+              type="button"
+              class="btn btn-outline btn-error self-start"
+              data-i18n="disabledSitesRemoveAllButton"
+            ></button>
+          </div>
+        </section>
+
         <div class="flex justify-between">
           <button
             id="reset"

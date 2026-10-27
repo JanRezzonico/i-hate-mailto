@@ -13,6 +13,17 @@
         <h1 class="text-lg font-bold" data-i18n="popupHeaderHeading"></h1>
         <p class="text-xs opacity-70" data-i18n="popupHeaderDescription"></p>
       </header>
+      <section class="space-y-2">
+        <h2 class="card-title flex items-baseline gap-2">
+          <span data-i18n="popupSiteSettingsHeading"></span>
+          <span id="site-status" class="text-xs font-normal opacity-70"></span>
+        </h2>
+        <button id="site-toggle" type="button" class="btn btn-block btn-error btn-outline" aria-pressed="false">
+          <span data-role="site-toggle-disabled-icon" class="hidden h-5 w-5" aria-hidden="true">✓</span>
+          <span data-role="site-toggle-enabled-icon" class="h-5 w-5" aria-hidden="true">✕</span>
+          <span data-role="site-toggle-label"></span>
+        </button>
+      </section>
       <h2 class="card-title" data-i18n="generalSettingsHeading"></h2>
       <dl class="space-y-2 text-sm">
         <div class="flex justify-between">

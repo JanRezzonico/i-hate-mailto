@@ -27,6 +27,12 @@ popupHeaderHeading: I Hate Mailto di rezzonico.dev
 popupHeaderDescription: Quando si clicca su un link mailto, l'indirizzo viene copiato negli appunti invece di aprire un'app di posta elettronica.
 popupToastColorsLabel: Colori
 popupOpenOptionsButton: Apri le impostazioni
+popupSiteSettingsHeading: Sito corrente
+popupSiteStatusEnabled: Abilitato
+popupSiteStatusDisabled: Disabilitato
+popupDisableSiteButton: Disabilita su $1
+popupEnableSiteButton: Abilita su $1
+popupSiteUnavailable: Non supportato su questo sito
 
 optionsHeaderHeading: Impostazioni
 optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo email viene copiato.
@@ -39,6 +45,11 @@ optionsErrorColors: Tutti i colori devono essere valori esadecimali validi.
 optionsErrorFallback: Correggi il campo evidenziato.
 optionsSettingsSaved: Impostazioni salvate correttamente.
 optionsSettingsReset: Impostazioni ripristinate ai valori predefiniti.
+disabledSitesHeading: Siti web disabilitati
+disabledSitesDescription: I link mailto vengono lasciati invariati su questi domini esatti. I sottodomini sono trattati separatamente.
+disabledSitesEmpty: Nessun sito web disabilitato.
+disabledSitesRemoveAllButton: Rimuovi tutti i siti disabilitati
+disabledSitesRemoved: Siti web disabilitati rimossi.
 
 positionTopRight: In alto a destra
 positionTopLeft: In alto a sinistra

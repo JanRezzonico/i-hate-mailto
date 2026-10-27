@@ -6,6 +6,7 @@ import { COPY_MODES } from '@/utils/clipboard/constants';
 import { $, cloneTemplate } from '@/utils/dom/query';
 import { applyI18n, localizeDocument } from '@/utils/i18n/localize-document';
 import { settings } from '@/utils/settings/settings';
+import { disabledSites, getValidDomains } from '@/utils/settings/disabled-sites';
 import type { ToastPosition, ToastType } from '@/utils/toast/types';
 import type { CopyMode } from '@/utils/clipboard/types';
 import type { Settings, SettingsKey } from '@/utils/settings/settings';
@@ -27,9 +28,25 @@ const page = {
 
   colors: $('#colors'),
   status: $('#status'),
+  disabledSites: $('#disabled-sites'),
+  disabledSitesEmpty: $('#disabled-sites-empty'),
+  removeDisabledSitesButton: $<HTMLButtonElement>('#remove-disabled-sites'),
 
   resetButton: $<HTMLButtonElement>('#reset'),
   saveButton: $<HTMLButtonElement>('#save'),
+};
+
+const renderDisabledSites = async () => {
+  const validDomains = await getValidDomains();
+  page.disabledSites.replaceChildren(
+    ...validDomains.map((domain) => {
+      const item = document.createElement('li');
+      item.textContent = domain;
+      return item;
+    }),
+  );
+  page.disabledSitesEmpty.classList.toggle('hidden', validDomains.length > 0);
+  page.removeDisabledSitesButton.disabled = validDomains.length === 0;
 };
 
 const populateSelectOptions = () => {
@@ -232,6 +249,13 @@ page.resetButton.addEventListener('click', async () => {
   showStatus(i18n.t('optionsSettingsReset'), 'success');
 });
 
+// When the "Remove All Disabled Sites" button is clicked, clear the list of disabled sites
+page.removeDisabledSitesButton.addEventListener('click', async () => {
+  await disabledSites.set('domains', []);
+  await renderDisabledSites();
+  showStatus(i18n.t('disabledSitesRemoved'), 'success');
+});
+
 // Main
 localizeDocument();
 populateSelectOptions();
@@ -241,3 +265,4 @@ page.durationMin.max = String(TOAST_DURATION_MAX);
 page.durationMax.min = String(TOAST_DURATION_MIN);
 page.durationMax.max = String(TOAST_DURATION_MAX);
 settings.getAll().then(populateFormValues);
+renderDisabledSites();
