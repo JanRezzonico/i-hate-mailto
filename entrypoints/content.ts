@@ -1,5 +1,6 @@
 import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
 import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
+import { translateCopyFailedMessage } from '@/utils/clipboard/translate-copy-failed-message';
 import { decodeMailto, isMailtoHref } from '@/utils/mailto/parse-mailto';
 import { settings } from '@/utils/settings/settings';
 import { computeInfoToastDuration } from '@/utils/toast/compute-info-toast-duration';
@@ -42,7 +43,10 @@ export default defineContentScript({
             await showToast(i18n.t('copySuccess'), 'success');
           }
         } else {
-          await showToast(i18n.t('copyFail'), 'error');
+          const errorCode = result.reason;
+          const message = translateCopyFailedMessage(errorCode);
+          const title = i18n.t('copyFail');
+          await showToast(`${title}: \n${message}`, 'error');
         }
       },
       true, // Use capture phase to intercept before the page's own handlers

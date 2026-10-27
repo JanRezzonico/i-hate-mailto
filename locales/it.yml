@@ -57,3 +57,6 @@ fieldBcc: Ccn
 fieldSubject: oggetto
 fieldHeaders: intestazioni
 fieldBody: testo
+
+errorCopyFailedNoRecipients: Nessun destinatario trovato nel link mailto.
+errorCopyFailedWriteToClipboard: Impossibile scrivere negli appunti. Controlla le impostazioni del browser e riprova.

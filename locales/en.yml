@@ -57,3 +57,6 @@ fieldBcc: Bcc
 fieldSubject: subject
 fieldHeaders: headers
 fieldBody: body
+
+errorCopyFailedNoRecipients: No recipients found in the mailto link.
+errorCopyFailedWriteToClipboard: Failed to write to clipboard. Please check your browser settings and try again.

@@ -11,4 +11,7 @@ export type FormattedContent = {
   notCopied: NotCopiedInfo | null;
 };
 
-export type CopyToClipboardResult = { success: false } | { success: true; notCopied: NotCopiedInfo | null };
+export type CopyToClipboardFailReason = 'NO_RECIPIENTS' | 'WRITE_TO_CLIPBOARD_FAILED';
+
+export type CopyToClipboardResult =
+  { success: false; reason: CopyToClipboardFailReason } | { success: true; notCopied: NotCopiedInfo | null };
