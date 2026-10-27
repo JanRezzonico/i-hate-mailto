@@ -1,5 +1,5 @@
 extName: I Hate Mailto
-extDescription: I Hate Mailto is a simple browser extension that intercepts mailto link interactions and copies the relevant information to the clipboard instead of opening the default email client
+extDescription: 'I Hate Mailto is a lightweight browser Add-On that stops mailto: links from opening your email client and copies the email address and other relevant details straight to your clipboard instead.'
 extNameLong: I Hate Mailto by rezzonico.dev
 
 popupTitle: I Hate Mailto by rezzonico.dev

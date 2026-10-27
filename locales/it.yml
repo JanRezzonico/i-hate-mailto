@@ -1,5 +1,5 @@
 extName: I Hate Mailto
-extDescription: I Hate Mailto è una semplice estensione per browser che intercetta le interazioni con i link mailto e copia le informazioni rilevanti negli appunti invece di aprire il client di posta predefinito
+extDescription: "I Hate Mailto è un Add-On per browser che impedisce ai link mailto: di aprire il tuo client di posta elettronica e copia invece l'indirizzo email e altri dettagli rilevanti direttamente negli appunti."
 extNameLong: I Hate Mailto di rezzonico.dev
 
 popupTitle: I Hate Mailto di rezzonico.dev
