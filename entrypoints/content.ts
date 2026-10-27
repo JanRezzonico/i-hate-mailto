@@ -36,17 +36,19 @@ export default defineContentScript({
         const result = await copyToClipboard(decoded);
         if (result.success) {
           if (result.notCopied) {
-            const message = i18n.t('copyPartial', [formatNotCopied(result.notCopied)]);
-            const base = await settings.get('toastDuration');
-            await showToast(message, 'info', computeInfoToastDuration(base, message));
+            const base = i18n.t('copyPartial');
+            const notes = formatNotCopied(result.notCopied);
+            const toastDuration = computeInfoToastDuration(await settings.get('toastDuration'), notes);
+            await showToast(base, notes, 'info', toastDuration);
           } else {
-            await showToast(i18n.t('copySuccess'), 'success');
+            const notes = '';
+            await showToast(i18n.t('copySuccess'), notes, 'success');
           }
         } else {
           const errorCode = result.reason;
           const message = translateCopyFailedMessage(errorCode);
           const title = i18n.t('copyFail');
-          await showToast(`${title}: \n${message}`, 'error');
+          await showToast(title, message, 'error');
         }
       },
       true, // Use capture phase to intercept before the page's own handlers

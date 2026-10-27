@@ -10,17 +10,33 @@ const createTextElement = (className: string, text: string): HTMLSpanElement => 
   return el;
 };
 
-export const createToastElement = (message: string, type: ToastType, config: Settings): HTMLDivElement => {
+export const createToastElement = (
+  message: string,
+  notes: string,
+  type: ToastType,
+  config: Settings,
+): HTMLDivElement => {
   const toast = document.createElement('div');
-  toast.className = 'toast';
+  toast.className =
+    'flex w-[300px] cursor-pointer items-center gap-2 rounded-sm border-0 bg-[var(--toast-bg)] px-4 py-4 text-[var(--toast-color)] shadow-sm';
   toast.setAttribute('role', 'status');
   toast.style.setProperty('--toast-color', config.toastColors[type]);
   toast.style.setProperty('--toast-bg', config.toastBackgrounds[type]);
 
   const content = document.createElement('div');
-  content.className = 'content';
-  content.append(createTextElement('header', i18n.t('extNameLong')), createTextElement('message', message));
+  content.className = 'flex flex-col gap-1';
+  content.append(
+    createTextElement('text-[10px] font-semibold uppercase opacity-70', i18n.t('extNameLong')),
+    createTextElement('whitespace-pre-wrap text-[14px] font-medium', message),
+    createTextElement('whitespace-pre-wrap text-[12px] opacity-70', notes),
+  );
 
-  toast.append(createTextElement('icon', TOAST_ICONS[type]), content);
+  toast.append(
+    createTextElement(
+      'flex items-center justify-center h-6 w-6 shrink-0 place-items-center rounded-full bg-white/25 text-sm font-bold',
+      TOAST_ICONS[type],
+    ),
+    content,
+  );
   return toast;
 };

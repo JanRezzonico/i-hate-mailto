@@ -50,7 +50,7 @@ copyModeToDescription: Copia solo gli indirizzi "To" dal link mailto.
 copyModeRecipientsDescription: Copia tutti i destinatari dal link mailto, inclusi gli indirizzi "To", "Cc" e "Bcc".
 copyModeFullDescription: "Copia l'intero link mailto, inclusi tutti i parametri e i valori. Nota: questo copia sempre più righe, anche se c'è solo un destinatario."
 
-copyPartial: "Copiato con successo.\nNon incluso:\n$1"
+copyPartial: "Copiato con successo. Non incluso:\n"
 fieldTo: A
 fieldCc: Cc
 fieldBcc: Ccn
