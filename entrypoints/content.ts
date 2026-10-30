@@ -54,7 +54,7 @@ export default defineContentScript({
 
         const decoded = handler.decode(hrefValue);
 
-        const result = await copyToClipboard(decoded);
+        const result = await copyToClipboard(decoded, currentSettings.copyMode);
         if (result.success) {
           const copiedLabel = i18n.t(LINK_TYPE_TO_LABEL_I18N_KEY_MAP[handler.type]);
           if (result.notCopied) {
