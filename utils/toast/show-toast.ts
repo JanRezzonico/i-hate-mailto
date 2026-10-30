@@ -11,7 +11,6 @@ type ToastContainer = {
 };
 
 const containers = new Map<ToastPosition, ToastContainer>();
-const MAX_Z_INDEX = 2147483647;
 
 const getToastContainer = (position: ToastPosition): ToastContainer => {
   const existing = containers.get(position);
@@ -22,7 +21,7 @@ const getToastContainer = (position: ToastPosition): ToastContainer => {
   const style = document.createElement('style');
   style.textContent = TOAST_STYLES;
   const element = document.createElement('div');
-  element.className = `toast ${POSITION_CLASSES[position]} z-[${MAX_Z_INDEX}] gap-2`;
+  element.className = `toast ${POSITION_CLASSES[position]} z-[2147483647] gap-2`;
   shadow.append(style, element);
   document.documentElement.appendChild(host);
 
