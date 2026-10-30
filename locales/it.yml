@@ -1,21 +1,29 @@
 extName: I Hate Mailto
-extDescription: "I Hate Mailto è un Add-On per browser che impedisce ai link mailto: di aprire il tuo client di posta elettronica e copia invece l'indirizzo email e altri dettagli rilevanti direttamente negli appunti."
+extDescription: 'I Hate Mailto è un Add-On per browser che impedisce ai link mailto:, tel: e sms: di aprire app esterne e copia invece i relativi dettagli direttamente negli appunti.'
 extNameLong: I Hate Mailto di rezzonico.dev
 
 popupTitle: I Hate Mailto di rezzonico.dev
 optionsTitle: Opzioni - I Hate Mailto di rezzonico.dev
 
-copySuccess: Copiato negli appunti con successo
+copySuccess: '$1 copiato negli appunti con successo'
 copyFail: Impossibile copiare negli appunti
 
 toastTypeSuccess: successo
 toastTypeInfo: info
 toastTypeError: errore
 
+linkTypeEmailAddress: Indirizzo email
+linkTypePhoneNumber: Numero di telefono
+linkTypeSms: SMS
+
 background: Sfondo
 text: Testo
 
 generalSettingsHeading: Impostazioni generali
+linkTypesLabel: Tipi di link
+mailtoLinksLabel: Link email
+telLinksLabel: Link telefonici
+smsLinksLabel: Link SMS
 copyModeLabel: Modalità di copia
 toastSettingsHeading: Impostazioni dei toast
 toastDurationMinLabel: Durata minima (ms)
@@ -24,7 +32,7 @@ toastDurationRangeLabel: Intervallo di durata (ms)
 toastPositionLabel: Posizione
 
 popupHeaderHeading: I Hate Mailto di rezzonico.dev
-popupHeaderDescription: Quando si clicca su un link mailto, l'indirizzo viene copiato negli appunti invece di aprire un'app di posta elettronica.
+popupHeaderDescription: Quando si clicca su un link mailto, tel o sms abilitato, i dettagli vengono copiati negli appunti invece di aprire un'app esterna.
 popupToastColorsLabel: Colori
 popupOpenOptionsButton: Apri le impostazioni
 popupSiteSettingsHeading: Sito corrente
@@ -35,9 +43,13 @@ popupEnableSiteButton: Abilita su $1
 popupSiteUnavailable: Non supportato su questo sito
 
 optionsHeaderHeading: Impostazioni
-optionsHeaderDescription: Personalizza il toast visualizzato quando un indirizzo email viene copiato.
+optionsHeaderDescription: Scegli quali tipi di link copiare e personalizza il toast visualizzato dopo la copia.
 optionsResetButton: Ripristina i valori predefiniti
 optionsSaveButton: Salva
+optionsResetConfirmationTitle: Ripristinare le impostazioni?
+optionsResetConfirmationDescription: Tutte le impostazioni verranno ripristinate ai valori predefiniti.
+optionsResetConfirmationButton: Ripristina impostazioni
+optionsCancelButton: Annulla
 optionsErrorDuration: Inserisci un numero intero compreso tra $1 e $2.
 optionsErrorDurationOrder: La durata minima non può superare la durata massima.
 optionsErrorPosition: Posizione non valida.
@@ -46,7 +58,7 @@ optionsErrorFallback: Correggi il campo evidenziato.
 optionsSettingsSaved: Impostazioni salvate correttamente.
 optionsSettingsReset: Impostazioni ripristinate ai valori predefiniti.
 disabledSitesHeading: Siti web disabilitati
-disabledSitesDescription: I link mailto vengono lasciati invariati su questi domini esatti. I sottodomini sono trattati separatamente.
+disabledSitesDescription: Tutti i tipi di link supportati vengono lasciati invariati su questi domini esatti. I sottodomini sono trattati separatamente.
 disabledSitesEmpty: Nessun sito web disabilitato.
 disabledSitesRemoveAllButton: Rimuovi tutti i siti disabilitati
 disabledSitesRemoved: Siti web disabilitati rimossi.
@@ -56,15 +68,16 @@ positionTopLeft: In alto a sinistra
 positionBottomRight: In basso a destra
 positionBottomLeft: In basso a sinistra
 
-copyModeTo: To
+copyModeTo: Principale
 copyModeRecipients: Destinatari
-copyModeFull: Completo
+copyModeFull: Link completo
 
-copyModeToDescription: Copia solo gli indirizzi "To" dal link mailto.
-copyModeRecipientsDescription: Copia tutti i destinatari dal link mailto, inclusi gli indirizzi "To", "Cc" e "Bcc".
-copyModeFullDescription: "Copia l'intero link mailto, inclusi tutti i parametri e i valori. Nota: questo copia sempre più righe, anche se c'è solo un destinatario."
+copyModeToDescription: Copia solo l'indirizzo email o il numero di telefono principale dal link.
+copyModeRecipientsDescription: Copia tutti i destinatari dal link, inclusi "To", "Cc" e "Bcc" quando disponibili.
+copyModeFullDescription: "Copia tutti i dati del link, inclusi tutti i parametri e i valori. Nota: questo copia sempre più righe, anche se c'è un solo destinatario."
+protocolReferencesSummary: Scopri di più sui protocolli
 
-copyPartial: "Copiato con successo. Non incluso:\n"
+copyPartial: "Non incluso:\n"
 fieldTo: A
 fieldCc: Cc
 fieldBcc: Ccn

@@ -1,21 +1,29 @@
 extName: I Hate Mailto
-extDescription: 'I Hate Mailto is a lightweight browser Add-On that stops mailto: links from opening your email client and copies the email address and other relevant details straight to your clipboard instead.'
+extDescription: 'I Hate Mailto is a lightweight browser Add-On that stops mailto:, tel:, and sms: links from opening external apps and copies their details straight to your clipboard instead.'
 extNameLong: I Hate Mailto by rezzonico.dev
 
 popupTitle: I Hate Mailto by rezzonico.dev
 optionsTitle: Options - I Hate Mailto by rezzonico.dev
 
-copySuccess: Copied to clipboard successfully
+copySuccess: '$1 copied successfully'
 copyFail: Failed to copy to clipboard
 
 toastTypeSuccess: success
 toastTypeInfo: info
 toastTypeError: error
 
+linkTypeEmailAddress: Email address
+linkTypePhoneNumber: Phone number
+linkTypeSms: SMS
+
 background: Background
 text: Text
 
 generalSettingsHeading: General Settings
+linkTypesLabel: Link types
+mailtoLinksLabel: Email links
+telLinksLabel: Phone number links
+smsLinksLabel: SMS links
 copyModeLabel: Copy Mode
 toastSettingsHeading: Toast Settings
 toastDurationMinLabel: Minimum duration (ms)
@@ -24,7 +32,7 @@ toastDurationRangeLabel: Duration range (ms)
 toastPositionLabel: Position
 
 popupHeaderHeading: I Hate Mailto by rezzonico.dev
-popupHeaderDescription: Clicking a mailto link copies the address to your clipboard instead of opening a mail app.
+popupHeaderDescription: Clicking an enabled mailto, tel, or sms link copies its details to your clipboard instead of opening an external app.
 popupToastColorsLabel: Colors
 popupOpenOptionsButton: Open settings
 popupSiteSettingsHeading: Current site
@@ -35,9 +43,13 @@ popupEnableSiteButton: Enable on $1
 popupSiteUnavailable: Not supported on this site
 
 optionsHeaderHeading: Settings
-optionsHeaderDescription: Customize the toast shown when an email address is copied.
+optionsHeaderDescription: Choose which link types to copy and customize the toast shown after copying.
 optionsResetButton: Reset to defaults
 optionsSaveButton: Save
+optionsResetConfirmationTitle: Reset settings?
+optionsResetConfirmationDescription: This will restore all settings to their default values.
+optionsResetConfirmationButton: Reset settings
+optionsCancelButton: Cancel
 optionsErrorDuration: Enter a whole number between $1 and $2.
 optionsErrorDurationOrder: Minimum duration must not exceed maximum duration.
 optionsErrorPosition: Invalid position.
@@ -46,7 +58,7 @@ optionsErrorFallback: Please fix the highlighted field.
 optionsSettingsSaved: Settings saved successfully.
 optionsSettingsReset: Settings reset to defaults.
 disabledSitesHeading: Disabled websites
-disabledSitesDescription: Mailto links are left untouched on these exact domains. Subdomains are treated separately.
+disabledSitesDescription: All supported link types are left untouched on these exact domains. Subdomains are treated separately.
 disabledSitesEmpty: No websites are disabled.
 disabledSitesRemoveAllButton: Remove all disabled websites
 disabledSitesRemoved: Disabled websites removed.
@@ -56,15 +68,16 @@ positionTopLeft: Top Left
 positionBottomRight: Bottom Right
 positionBottomLeft: Bottom Left
 
-copyModeTo: To
+copyModeTo: Primary
 copyModeRecipients: Recipients
-copyModeFull: Full
+copyModeFull: Full link
 
-copyModeToDescription: Copies only the "To" addresses from the mailto link.
-copyModeRecipientsDescription: Copies all recipients from the mailto link, including "To", "Cc", and "Bcc" addresses.
-copyModeFullDescription: 'Copies the entire mailto link, including all parameters and values. Note: this always copies multiple lines, even if there is only one recipient.'
+copyModeToDescription: Copies only the primary email address or phone number from the link.
+copyModeRecipientsDescription: Copies all recipients from the link, including "To", "Cc", and "Bcc" where available.
+copyModeFullDescription: 'Copies the complete link data, including all parameters and values. Note: this always copies multiple lines, even if there is only one recipient.'
+protocolReferencesSummary: Read about the protocols
 
-copyPartial: "Copied successfully. Not included:\n"
+copyPartial: "Not included:\n"
 fieldTo: To
 fieldCc: Cc
 fieldBcc: Bcc

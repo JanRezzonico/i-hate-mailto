@@ -1,9 +1,9 @@
-import type { DecodedMailto } from '@/utils/mailto/types';
+import type { DecodedLink } from '@/utils/links/types';
 import { DEFAULT_COPY_MODE } from './constants';
 import { collectNotCopied } from './not-copied';
 import type { CopyMode, FormattedContent } from './types';
 
-const formatFull = (d: DecodedMailto): string => {
+const formatFull = (d: DecodedLink): string => {
   const lines: string[] = [];
   if (d.to.length) lines.push(`To: ${d.to.join(', ')}`);
   if (d.cc.length) lines.push(`Cc: ${d.cc.join(', ')}`);
@@ -16,7 +16,7 @@ const formatFull = (d: DecodedMailto): string => {
   return lines.join('\n');
 };
 
-const FORMATTERS: Record<CopyMode, (d: DecodedMailto) => FormattedContent> = {
+const FORMATTERS: Record<CopyMode, (d: DecodedLink) => FormattedContent> = {
   to: (d) => ({
     content: d.to.join(', '),
     notCopied: collectNotCopied(d, ['cc', 'bcc', 'subject', 'headers', 'body']),
@@ -31,7 +31,7 @@ const FORMATTERS: Record<CopyMode, (d: DecodedMailto) => FormattedContent> = {
   }),
 };
 
-export const formatCopiedContent = (mailto: DecodedMailto, mode: CopyMode): FormattedContent => {
+export const formatCopiedContent = (link: DecodedLink, mode: CopyMode): FormattedContent => {
   const format = FORMATTERS[mode] ?? FORMATTERS[DEFAULT_COPY_MODE];
-  return format(mailto);
+  return format(link);
 };

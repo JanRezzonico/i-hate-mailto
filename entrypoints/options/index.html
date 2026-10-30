@@ -15,26 +15,71 @@
       </header>
 
       <form id="form" novalidate class="space-y-6">
+        <div class="flex justify-between">
+          <button
+            id="top-reset"
+            type="button"
+            class="btn btn-outline btn-secondary"
+            data-i18n="optionsResetButton"
+          ></button>
+          <button id="top-save" type="submit" class="btn btn-secondary" data-i18n="optionsSaveButton" disabled></button>
+        </div>
+
         <section class="card bg-base-100 shadow-sm">
           <div class="card-body gap-4">
             <h2 class="card-title" data-i18n="generalSettingsHeading"></h2>
+
+            <fieldset class="space-y-3 flex justify-between">
+              <legend class="label-text font-medium" data-i18n="linkTypesLabel"></legend>
+              <label class="label justify-start gap-3">
+                <input id="mailto-enabled" type="checkbox" class="toggle toggle-secondary toggle-lg" />
+                <span data-i18n="mailtoLinksLabel"></span>
+              </label>
+              <label class="label justify-start gap-3">
+                <input id="tel-enabled" type="checkbox" class="toggle toggle-secondary toggle-lg" />
+                <span data-i18n="telLinksLabel"></span>
+              </label>
+              <label class="label justify-start gap-3">
+                <input id="sms-enabled" type="checkbox" class="toggle toggle-secondary toggle-lg" />
+                <span data-i18n="smsLinksLabel"></span>
+              </label>
+            </fieldset>
 
             <label class="form-control w-full">
               <span class="label-text mb-1 font-medium" data-i18n="copyModeLabel"></span>
               <select id="copy-mode" class="select select-secondary w-full capitalize"></select>
             </label>
-            <div class="w-full border-l-2 bg-base-200 border-secondary p-2 rounded-sm flex flex-col gap-2">
+            <div class="w-full rounded-md border border-secondary/30 bg-base-200 p-3 flex flex-col gap-2">
               <div id="copy-mode-descriptions" class="flex flex-col gap-2"></div>
-              <div>
-                <a
-                  href="https://www.rfc-editor.org/info/rfc6068/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="link link-secondary link-hover text-sm"
-                >
-                  RFC 6068 - The "mailto" URI Scheme
-                </a>
-              </div>
+              <details>
+                <summary class="cursor-pointer text-sm font-medium" data-i18n="protocolReferencesSummary"></summary>
+                <div class="mt-2 flex flex-col gap-2">
+                  <a
+                    href="https://www.rfc-editor.org/info/rfc6068/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link link-secondary link-hover text-sm"
+                  >
+                    RFC 6068 - The "mailto" URI Scheme
+                  </a>
+                  <a
+                    href="https://www.rfc-editor.org/info/rfc3966/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link link-secondary link-hover text-sm"
+                  >
+                    RFC 3966 - The tel URI for Telephone Numbers
+                  </a>
+                  <a
+                    href="https://www.rfc-editor.org/info/rfc5724/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link link-secondary link-hover text-sm"
+                  >
+                    RFC 5724 - URI Scheme for Global System for Mobile Communications (GSM) Short Message Service (SMS)
+                  </a>
+                </div>
+              </details>
             </div>
           </div>
         </section>
@@ -80,15 +125,19 @@
 
         <div class="flex justify-between">
           <button
-            id="reset"
+            id="bottom-reset"
             type="button"
             class="btn btn-outline btn-secondary"
             data-i18n="optionsResetButton"
           ></button>
-          <button id="save" type="submit" class="btn btn-secondary" data-i18n="optionsSaveButton" disabled></button>
+          <button
+            id="bottom-save"
+            type="submit"
+            class="btn btn-secondary"
+            data-i18n="optionsSaveButton"
+            disabled
+          ></button>
         </div>
-
-        <div id="status" role="alert" class="alert hidden"></div>
       </form>
     </main>
 
@@ -110,9 +159,28 @@
           <input type="color" data-field="text" class="h-8 w-10 cursor-pointer" />
           <span data-i18n="text"></span>
         </label>
-        <div data-role="preview" class="rounded-md px-3 py-1.5 text-center text-sm capitalize"></div>
+        <div data-role="preview" class="rounded-md px-3 py-1.5 text-center text-sm capitalize cursor-default"></div>
       </div>
     </template>
+
+    <dialog id="reset-confirmation" class="modal" aria-labelledby="reset-confirmation-title">
+      <div class="modal-box">
+        <h3 id="reset-confirmation-title" class="text-lg font-bold" data-i18n="optionsResetConfirmationTitle"></h3>
+        <p class="py-4" data-i18n="optionsResetConfirmationDescription"></p>
+        <div class="modal-action">
+          <button id="reset-cancel" type="button" class="btn" data-i18n="optionsCancelButton"></button>
+          <button
+            id="reset-confirm"
+            type="button"
+            class="btn btn-secondary"
+            data-i18n="optionsResetConfirmationButton"
+          ></button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button type="submit" aria-label="Close"></button>
+      </form>
+    </dialog>
 
     <script type="module" src="./main.ts"></script>
   </body>

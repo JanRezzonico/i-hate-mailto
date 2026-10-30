@@ -11,6 +11,7 @@ import type { ToastPosition, ToastType } from '@/utils/toast/types';
 import type { CopyMode } from '@/utils/clipboard/types';
 import type { Settings, SettingsKey } from '@/utils/settings/settings';
 import { translateCopyModeDescription } from '@/utils/clipboard/translate-copy-mode-description';
+import showToast from '@/utils/toast/show-toast';
 
 type Errors = { durationMin?: string; durationMax?: string; other?: string };
 
@@ -19,6 +20,9 @@ const page = {
 
   copyModeSelect: $<HTMLSelectElement>('#copy-mode'),
   copyModeDescriptions: $('#copy-mode-descriptions'),
+  mailtoEnabled: $<HTMLInputElement>('#mailto-enabled'),
+  telEnabled: $<HTMLInputElement>('#tel-enabled'),
+  smsEnabled: $<HTMLInputElement>('#sms-enabled'),
 
   durationMin: $<HTMLInputElement>('#duration-min'),
   durationMax: $<HTMLInputElement>('#duration-max'),
@@ -27,13 +31,15 @@ const page = {
   positionSelect: $<HTMLSelectElement>('#position'),
 
   colors: $('#colors'),
-  status: $('#status'),
   disabledSites: $('#disabled-sites'),
   disabledSitesEmpty: $('#disabled-sites-empty'),
   removeDisabledSitesButton: $<HTMLButtonElement>('#remove-disabled-sites'),
 
-  resetButton: $<HTMLButtonElement>('#reset'),
-  saveButton: $<HTMLButtonElement>('#save'),
+  resetButtons: [$<HTMLButtonElement>('#top-reset'), $<HTMLButtonElement>('#bottom-reset')],
+  saveButtons: [$<HTMLButtonElement>('#top-save'), $<HTMLButtonElement>('#bottom-save')],
+  resetConfirmation: $<HTMLDialogElement>('#reset-confirmation'),
+  resetCancelButton: $<HTMLButtonElement>('#reset-cancel'),
+  resetConfirmButton: $<HTMLButtonElement>('#reset-confirm'),
 };
 
 const renderDisabledSites = async () => {
@@ -103,6 +109,9 @@ const updateToastPreviews = () => {
 };
 
 const populateFormValues = (values: Settings) => {
+  page.mailtoEnabled.checked = values.mailtoEnabled;
+  page.telEnabled.checked = values.telEnabled;
+  page.smsEnabled.checked = values.smsEnabled;
   page.copyModeSelect.value = values.copyMode;
   page.positionSelect.value = values.toastPosition;
   page.durationMin.value = String(values.toastDurationMin);
@@ -120,6 +129,9 @@ const transformFormValues = (): Settings => {
     Object.fromEntries(TOAST_TYPES.map((type) => [type, colorRows[type][field].value])) as Record<ToastType, string>;
 
   return {
+    mailtoEnabled: page.mailtoEnabled.checked,
+    telEnabled: page.telEnabled.checked,
+    smsEnabled: page.smsEnabled.checked,
     copyMode: page.copyModeSelect.value as CopyMode,
     toastDurationMin: Number(page.durationMin.value),
     toastDurationMax: Number(page.durationMax.value),
@@ -135,7 +147,10 @@ const serializeTransformedFormValues = (values: Settings) => JSON.stringify(valu
 
 const updateSaveState = () => {
   const currentSnapshot = serializeTransformedFormValues(transformFormValues());
-  page.saveButton.disabled = currentSnapshot === dirtyTrackingSnapshot;
+  const disabled = currentSnapshot === dirtyTrackingSnapshot;
+  page.saveButtons.forEach((button) => {
+    button.disabled = disabled;
+  });
 };
 
 const cleanSaveState = () => {
@@ -194,28 +209,11 @@ const clearErrors = () => {
   showErrors({});
 };
 
-let statusTimer: number | undefined;
-
-const showStatus = (message: string, type: 'success' | 'error') => {
-  window.clearTimeout(statusTimer);
-  page.status.textContent = message;
-  page.status.className = `alert ${type === 'success' ? 'alert-success' : 'alert-error'}`;
-  if (type === 'success') {
-    statusTimer = window.setTimeout(() => page.status.classList.add('hidden'), 2000);
-  }
-};
-
-const hideStatus = () => {
-  window.clearTimeout(statusTimer);
-  page.status.classList.add('hidden');
-};
-
 // When the form is modified, update various states and clear any existing errors
 page.form.addEventListener('input', () => {
   updateToastPreviews();
   updateSaveState();
   clearErrors();
-  hideStatus();
 });
 
 // When the form is submitted, validate the values and save them if valid,
@@ -228,32 +226,43 @@ page.form.addEventListener('submit', async (event) => {
   showErrors(errors);
 
   if (errors.durationMin || errors.durationMax || errors.other) {
-    showStatus(errors.other ?? i18n.t('optionsErrorFallback'), 'error');
+    await showToast(errors.other ?? i18n.t('optionsErrorFallback'), '', 'error');
     return;
   }
 
   const keys = Object.keys(values) as SettingsKey[];
   await Promise.all(keys.map((key) => settings.set(key, values[key])));
   cleanSaveState();
-  showStatus(i18n.t('optionsSettingsSaved'), 'success');
+  await showToast(i18n.t('optionsSettingsSaved'), '', 'success');
 });
 
 // When the reset (restore defaults) button is clicked, reset all settings to their default values
 // and clear any errors or save state
-page.resetButton.addEventListener('click', async () => {
+const resetSettings = async () => {
   const keys = Object.keys(settings.defaults) as SettingsKey[];
   await Promise.all(keys.map((key) => settings.reset(key)));
   const newValues = await settings.getAll();
   populateFormValues(newValues); // also resets the dirty-tracking snapshot
   clearErrors();
-  showStatus(i18n.t('optionsSettingsReset'), 'success');
+  await showToast(i18n.t('optionsSettingsReset'), '', 'success');
+};
+
+page.resetButtons.forEach((button) =>
+  button.addEventListener('click', () => {
+    page.resetConfirmation.showModal();
+  }),
+);
+page.resetCancelButton.addEventListener('click', () => page.resetConfirmation.close());
+page.resetConfirmButton.addEventListener('click', async () => {
+  await resetSettings();
+  page.resetConfirmation.close();
 });
 
 // When the "Remove All Disabled Sites" button is clicked, clear the list of disabled sites
 page.removeDisabledSitesButton.addEventListener('click', async () => {
   await disabledSites.set('domains', []);
   await renderDisabledSites();
-  showStatus(i18n.t('disabledSitesRemoved'), 'success');
+  await showToast(i18n.t('disabledSitesRemoved'), '', 'success');
 });
 
 // Main

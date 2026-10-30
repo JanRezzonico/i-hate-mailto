@@ -1,9 +1,9 @@
-import type { DecodedMailto } from '@/utils/mailto/types';
+import type { DecodedLink } from '@/utils/links/types';
 
 export type CopyMode = 'to' | 'recipients' | 'full';
 
 /** Mailto fields that were left out of the clipboard because of the active copy mode. */
-export type NotCopiedInfo = Partial<Pick<DecodedMailto, 'to' | 'cc' | 'bcc' | 'subject' | 'headers' | 'body'>>;
+export type NotCopiedInfo = Partial<Pick<DecodedLink, 'to' | 'cc' | 'bcc' | 'subject' | 'headers' | 'body'>>;
 export type NotCopiedKey = keyof NotCopiedInfo;
 
 export type FormattedContent = {

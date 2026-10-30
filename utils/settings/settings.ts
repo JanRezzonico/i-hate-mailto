@@ -9,6 +9,10 @@ import {
 import { defineSettings } from './define-settings';
 
 export const settings = defineSettings({
+  mailtoEnabled: true,
+  telEnabled: false,
+  smsEnabled: false,
+
   toastBackgrounds: DEFAULT_TOAST_BACKGROUNDS,
   toastColors: DEFAULT_TOAST_COLORS,
   toastDurationMin: DEFAULT_TOAST_DURATION_MIN,

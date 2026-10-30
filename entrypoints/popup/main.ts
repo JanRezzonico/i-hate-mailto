@@ -19,9 +19,15 @@ const page = {
   siteToggleLabel: $('[data-role="site-toggle-label"]', $('#site-toggle')),
   siteToggleDisabledIcon: $('[data-role="site-toggle-disabled-icon"]', $('#site-toggle')),
   siteToggleEnabledIcon: $('[data-role="site-toggle-enabled-icon"]', $('#site-toggle')),
+  mailtoStatus: $('#mailto-status'),
+  telStatus: $('#tel-status'),
+  smsStatus: $('#sms-status'),
 };
 
 let currentDomain: string | null = null;
+
+const translateProtocolStatus = (enabled: boolean): string =>
+  `${enabled ? '✓' : '✕'} ${i18n.t(enabled ? 'popupSiteStatusEnabled' : 'popupSiteStatusDisabled')}`;
 
 const renderSiteToggle = async () => {
   if (!currentDomain) {
@@ -47,6 +53,9 @@ const renderSiteToggle = async () => {
 };
 
 const render = (values: Settings) => {
+  page.mailtoStatus.textContent = translateProtocolStatus(values.mailtoEnabled);
+  page.telStatus.textContent = translateProtocolStatus(values.telEnabled);
+  page.smsStatus.textContent = translateProtocolStatus(values.smsEnabled);
   page.copyMode.textContent = translateCopyMode(values.copyMode);
   page.duration.textContent = `${values.toastDurationMin}-${values.toastDurationMax} ms`;
   page.position.textContent = translateToastPosition(values.toastPosition);

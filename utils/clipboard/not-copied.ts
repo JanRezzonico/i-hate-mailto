@@ -1,5 +1,5 @@
-import type { DecodedMailto } from '@/utils/mailto/types';
 import type { NotCopiedInfo, NotCopiedKey } from './types';
+import type { DecodedLink } from '@/utils/links/types';
 
 const isEmptyValue = (value: unknown): boolean => {
   if (Array.isArray(value)) return value.length === 0;
@@ -7,7 +7,7 @@ const isEmptyValue = (value: unknown): boolean => {
   return !value;
 };
 
-export const collectNotCopied = (mailto: DecodedMailto, keys: NotCopiedKey[]): NotCopiedInfo | null => {
+export const collectNotCopied = (mailto: DecodedLink, keys: NotCopiedKey[]): NotCopiedInfo | null => {
   const result: NotCopiedInfo = {};
   for (const key of keys) {
     if (!isEmptyValue(mailto[key])) Object.assign(result, { [key]: mailto[key] });
