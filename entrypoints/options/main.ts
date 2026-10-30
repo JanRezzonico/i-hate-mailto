@@ -29,6 +29,7 @@ const page = {
   durationError: $('#duration-error'),
 
   positionSelect: $<HTMLSelectElement>('#position'),
+  positionPreviewToast: $<HTMLDivElement>('#position-preview-toast'),
 
   colors: $('#colors'),
   disabledSites: $('#disabled-sites'),
@@ -108,6 +109,17 @@ const updateToastPreviews = () => {
   }
 };
 
+const updatePositionPreview = () => {
+  const positionClasses: Record<ToastPosition, string> = {
+    'top-right': 'top-3 right-3',
+    'top-left': 'top-3 left-3',
+    'bottom-right': 'bottom-3 right-3',
+    'bottom-left': 'bottom-3 left-3',
+  };
+  const position = page.positionSelect.value as ToastPosition;
+  page.positionPreviewToast.className = `absolute rounded-box bg-success px-3 py-2 text-sm font-medium text-success-content shadow-sm ${positionClasses[position]}`;
+};
+
 const populateFormValues = (values: Settings) => {
   page.mailtoEnabled.checked = values.mailtoEnabled;
   page.telEnabled.checked = values.telEnabled;
@@ -121,6 +133,7 @@ const populateFormValues = (values: Settings) => {
     colorRows[type].text.value = values.toastColors[type];
   }
   updateToastPreviews();
+  updatePositionPreview();
   cleanSaveState();
 };
 
@@ -212,6 +225,7 @@ const clearErrors = () => {
 // When the form is modified, update various states and clear any existing errors
 page.form.addEventListener('input', () => {
   updateToastPreviews();
+  updatePositionPreview();
   updateSaveState();
   clearErrors();
 });

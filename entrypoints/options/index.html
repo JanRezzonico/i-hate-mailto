@@ -99,10 +99,29 @@
             </div>
             <span id="duration-error" class="mt-1 hidden text-sm text-error"></span>
 
-            <label class="form-control w-full">
-              <span class="label-text mb-1 font-medium" data-i18n="toastPositionLabel"></span>
-              <select id="position" class="select select-secondary w-full capitalize"></select>
-            </label>
+            <div class="space-y-4 flex flex-col gap-2">
+              <label class="form-control w-full">
+                <span class="label-text mb-1 font-medium" data-i18n="toastPositionLabel"></span>
+                <select id="position" class="select select-secondary w-full capitalize"></select>
+              </label>
+              <div
+                id="position-preview"
+                class="mockup-browser border-base-300 bg-base-200 border"
+                aria-label="Toast position preview"
+              >
+                <div class="mockup-browser-toolbar">
+                  <div class="input border-base-300">example.com</div>
+                </div>
+                <div class="relative min-h-64 border-t border-base-300 bg-base-100">
+                  <div
+                    id="position-preview-toast"
+                    class="absolute rounded-box bg-success px-3 py-2 text-sm font-medium text-success-content shadow-sm cursor-default"
+                  >
+                    Copied!
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="divider my-0"></div>
             <div id="colors" class="space-y-3"></div>
           </div>
