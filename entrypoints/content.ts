@@ -2,21 +2,14 @@ import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
 import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
 import { translateCopyFailedMessage } from '@/utils/clipboard/translate-copy-failed-message';
 import { getLinkHandler } from '@/utils/links/handlers';
-import type { LinkHandler, LinkType } from '@/utils/links/types';
+import type { LinkHandler } from '@/utils/links/types';
 import { disabledSites, isDomainDisabled } from '@/utils/settings/disabled-sites';
-import { settings } from '@/utils/settings/settings';
+import { LINK_TYPE_TO_ENABLED_SETTING_MAP, LINK_TYPE_TO_LABEL_I18N_KEY_MAP, settings } from '@/utils/settings/settings';
 import type { Settings } from '@/utils/settings/settings';
 import showToast from '@/utils/toast/show-toast';
 
 const isHandlerEnabled = (handler: LinkHandler, values: Settings): boolean => {
-  //TODO: pretty frail, later change to a more robust approach
-  return values[`${handler.type}Enabled` as keyof Settings] as boolean;
-};
-
-const LINK_TYPE_LABEL_KEYS: Record<LinkType, 'linkTypeEmailAddress' | 'linkTypePhoneNumber' | 'linkTypeSms'> = {
-  mailto: 'linkTypeEmailAddress',
-  tel: 'linkTypePhoneNumber',
-  sms: 'linkTypeSms',
+  return values[LINK_TYPE_TO_ENABLED_SETTING_MAP[handler.type]];
 };
 
 export default defineContentScript({
@@ -43,12 +36,13 @@ export default defineContentScript({
 
         const link = e
           .composedPath() // Also includes shadow DOM elements
-          .find(
-            (n): n is HTMLAnchorElement =>
-              n instanceof HTMLAnchorElement &&
-              getLinkHandler(n.getAttribute('href') ?? '', (handler) => isHandlerEnabled(handler, currentSettings)) !==
-                undefined,
-          );
+          .find((n): n is HTMLAnchorElement => {
+            const isAnchor = n instanceof HTMLAnchorElement;
+            if (!isAnchor) return false;
+            const href = n.getAttribute('href') ?? '';
+            const handler = getLinkHandler(href, (candidate) => isHandlerEnabled(candidate, currentSettings));
+            return handler !== undefined;
+          });
         if (!link) return;
 
         const hrefValue = link.getAttribute('href') ?? '';
@@ -62,7 +56,7 @@ export default defineContentScript({
 
         const result = await copyToClipboard(decoded);
         if (result.success) {
-          const copiedLabel = i18n.t(LINK_TYPE_LABEL_KEYS[handler.type]);
+          const copiedLabel = i18n.t(LINK_TYPE_TO_LABEL_I18N_KEY_MAP[handler.type]);
           if (result.notCopied) {
             const base = `${i18n.t('copySuccess', [copiedLabel])}. ${i18n.t('copyPartial')}`;
             const notes = formatNotCopied(result.notCopied);
