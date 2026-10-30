@@ -132,9 +132,10 @@
   </head>
   <body>
     <main>
-      <h1>mailto dev page</h1>
+      <h1>Link handler dev page</h1>
       <p class="lead">
-        Click each link. The extension should copy the address and show a toast instead of opening a mail client.
+        Click each enabled link. The extension should copy its details and show a toast instead of opening an external
+        app. Enable SMS and telephone links in the options page before testing them.
       </p>
       <p class="env" id="env"></p>
 
@@ -240,6 +241,46 @@
         </li>
       </ul>
 
+      <h2>SMS and telephone links</h2>
+      <p class="lead">These links are disabled by default and must be enabled in the extension options.</p>
+      <ul>
+        <li>
+          <a href="sms:+41000000001">SMS recipient</a><small><code>sms:+41000000001</code></small>
+        </li>
+        <li>
+          <a href="sms:+41000000001,+41000000002">SMS multiple recipients</a
+          ><small><code>sms:+41000000001,+41000000002</code></small>
+        </li>
+        <li>
+          <a href="sms:+41000000001?body=Hello%20from%20the%20dev%20page">SMS with body</a
+          ><small><code>?body=Hello%20from%20the%20dev%20page</code></small>
+        </li>
+        <li>
+          <a href="sms:+41000000001?subject=Test%20subject&body=Line%201%0ALine%202">SMS with subject and body</a
+          ><small><code>?subject=...&body=...</code></small>
+        </li>
+        <li>
+          <a href="smsto:+41000000001?body=Hello%20from%20smsto">smsto with body</a
+          ><small><code>smsto:+41000000001?body=...</code></small>
+        </li>
+        <li>
+          <a href="sms:+41000000001?body=Caf%C3%A9%20%26%20Cr%C3%A8me">SMS with encoded characters</a
+          ><small><code>body=Caf%C3%A9%20%26%20Cr%C3%A8me</code></small>
+        </li>
+        <li>
+          <a href="tel:+41000000001">Telephone number</a><small><code>tel:+41000000001</code></small>
+        </li>
+        <li>
+          <a href="tel:+41000000001;ext=123">Telephone with extension</a
+          ><small><code>tel:+41000000001;ext=123</code></small>
+        </li>
+        <li>
+          <a href="tel:+41000000001;phone-context=example.com">Telephone with parameter</a
+          ><small><code>tel:+41000000001;phone-context=example.com</code></small>
+        </li>
+        <li><a href="tel:">Empty telephone link</a><small>should show the error toast</small></li>
+      </ul>
+
       <h2>DOM variants</h2>
       <ul>
         <li>
@@ -274,7 +315,7 @@
       <h2>Controls: should not be intercepted</h2>
       <ul>
         <li><a href="https://example.com">Regular https link</a><small>opens normally</small></li>
-        <li><a href="tel:+41000000000">tel: link</a><small>untouched</small></li>
+        <li><a href="fax:+41000000000">Unsupported link scheme</a><small>untouched</small></li>
         <li><a href="/index.html#mailto:jane@example.com">mailto only in the fragment</a><small>untouched</small></li>
         <li><a href="mailto-lookalike.html">File name starting with mailto</a><small>untouched</small></li>
       </ul>
