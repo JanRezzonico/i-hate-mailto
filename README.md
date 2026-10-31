@@ -1,6 +1,6 @@
 # I Hate Mailto by rezzonico.dev
 
-I Hate Mailto is a lightweight browser Add-On that stops enabled mailto:, tel:, and sms: links from opening unwanted applications and copies their details to your clipboard. mailto: is enabled by default; tel: and sms: (including smsto:) can be enabled in the options page.
+I Hate Mailto is a lightweight browser Add-On that stops enabled mailto:, tel:, and sms: links from opening unwanted applications and copies their details to your clipboard.
 
 Stop supported links from launching unwanted applications and instantly copy their addresses and parameters to your clipboard. A lightweight and simple solution for a smoother browsing experience.
 
