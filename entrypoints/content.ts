@@ -1,6 +1,7 @@
 import copyToClipboard from '@/utils/clipboard/copy-to-clipboard';
 import { formatNotCopied } from '@/utils/clipboard/format-not-copied';
 import { translateCopyFailedMessage } from '@/utils/clipboard/translate-copy-failed-message';
+import { getHref, isAnchor, type AnyAnchor } from '@/utils/links/anchors';
 import { getLinkHandler } from '@/utils/links/handlers';
 import type { LinkHandler } from '@/utils/links/types';
 import { disabledSites, isDomainDisabled } from '@/utils/settings/disabled-sites';
@@ -67,17 +68,16 @@ export default defineContentScript({
       if (e.button !== 0 && e.button !== 1) return; // left and middle click only
       if (thisDomainIsDisabled) return;
 
-      const link = e.composedPath().find((n): n is HTMLAnchorElement => {
-        if (!(n instanceof HTMLAnchorElement)) return false;
-        const href = n.getAttribute('href') ?? '';
-        return getLinkHandler(href, (c) => isHandlerEnabled(c, currentSettings)) !== undefined;
+      const link = e.composedPath().find((n): n is AnyAnchor => {
+        if (!isAnchor(n)) return false;
+        return getLinkHandler(getHref(n), (c) => isHandlerEnabled(c, currentSettings)) !== undefined;
       });
       if (!link) return;
 
       e.preventDefault();
       e.stopImmediatePropagation();
 
-      await copyLink(link.getAttribute('href') ?? '');
+      await copyLink(getHref(link));
     };
 
     const capturePhase = true;

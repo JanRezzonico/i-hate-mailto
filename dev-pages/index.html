@@ -281,6 +281,38 @@
         <li><a href="tel:">Empty telephone link</a><small>should show the error toast</small></li>
       </ul>
 
+      <h2>HTML anchor (baseline)</h2>
+      <ul>
+        <li>
+          <a href="tel:+41000000000">
+            <svg width="120" height="40">
+              <rect width="120" height="40" fill="#cde" />
+              <text x="10" y="25">HTML wraps SVG</text>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <svg width="360" height="60">
+            <a href="mailto:svg@example.com">
+              <rect width="170" height="40" y="10" fill="#fdc" />
+              <text x="10" y="35">SVG mailto</text>
+            </a>
+            <a href="sms:+41000000000" transform="translate(180 0)">
+              <rect width="170" height="40" y="10" fill="#dfc" />
+              <text x="10" y="35">SVG sms</text>
+            </a>
+          </svg>
+        </li>
+        <li>
+          <svg width="200" height="60" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <a xlink:href="mailto:legacy@example.com">
+              <rect width="190" height="40" y="10" fill="#edf" />
+              <text x="10" y="35">SVG xlink mailto</text>
+            </a>
+          </svg>
+        </li>
+      </ul>
+
       <h2>DOM variants</h2>
       <ul>
         <li>
