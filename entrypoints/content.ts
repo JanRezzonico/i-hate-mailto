@@ -29,50 +29,50 @@ export default defineContentScript({
       currentSettings = values;
     });
 
-    document.addEventListener(
-      'click',
-      async (e) => {
-        if (thisDomainIsDisabled) return;
+    const onClick = async (e: MouseEvent) => {
+      if (thisDomainIsDisabled) return;
 
-        const link = e
-          .composedPath() // Also includes shadow DOM elements
-          .find((n): n is HTMLAnchorElement => {
-            const isAnchor = n instanceof HTMLAnchorElement;
-            if (!isAnchor) return false;
-            const href = n.getAttribute('href') ?? '';
-            const handler = getLinkHandler(href, (candidate) => isHandlerEnabled(candidate, currentSettings));
-            return handler !== undefined;
-          });
-        if (!link) return;
+      const link = e
+        .composedPath() // Also includes shadow DOM elements
+        .find((n): n is HTMLAnchorElement => {
+          const isAnchor = n instanceof HTMLAnchorElement;
+          if (!isAnchor) return false;
+          const href = n.getAttribute('href') ?? '';
+          const handler = getLinkHandler(href, (candidate) => isHandlerEnabled(candidate, currentSettings));
+          return handler !== undefined;
+        });
+      if (!link) return;
 
-        const hrefValue = link.getAttribute('href') ?? '';
-        const handler = getLinkHandler(hrefValue, (candidate) => isHandlerEnabled(candidate, currentSettings));
-        if (!handler) return;
+      const hrefValue = link.getAttribute('href') ?? '';
+      const handler = getLinkHandler(hrefValue, (candidate) => isHandlerEnabled(candidate, currentSettings));
+      if (!handler) return;
 
-        e.preventDefault();
-        e.stopImmediatePropagation();
+      e.preventDefault();
+      e.stopImmediatePropagation();
 
-        const decoded = handler.decode(hrefValue);
+      const decoded = handler.decode(hrefValue);
 
-        const result = await copyToClipboard(decoded, currentSettings.copyMode);
-        if (result.success) {
-          const copiedLabel = i18n.t(LINK_TYPE_TO_LABEL_I18N_KEY_MAP[handler.type]);
-          if (result.notCopied) {
-            const base = `${i18n.t('copySuccess', [copiedLabel])}. ${i18n.t('copyPartial')}`;
-            const notes = formatNotCopied(result.notCopied);
-            await showToast(base, notes, 'info');
-          } else {
-            const notes = '';
-            await showToast(i18n.t('copySuccess', [copiedLabel]), notes, 'success');
-          }
+      const result = await copyToClipboard(decoded, currentSettings.copyMode);
+      if (result.success) {
+        const copiedLabel = i18n.t(LINK_TYPE_TO_LABEL_I18N_KEY_MAP[handler.type]);
+        if (result.notCopied) {
+          const base = `${i18n.t('copySuccess', [copiedLabel])}. ${i18n.t('copyPartial')}`;
+          const notes = formatNotCopied(result.notCopied);
+          await showToast(base, notes, 'info');
         } else {
-          const errorCode = result.reason;
-          const message = translateCopyFailedMessage(errorCode);
-          const title = i18n.t('copyFail');
-          await showToast(title, message, 'error');
+          const notes = '';
+          await showToast(i18n.t('copySuccess', [copiedLabel]), notes, 'success');
         }
-      },
-      true, // Use capture phase to intercept before the page's own handlers
-    );
+      } else {
+        const errorCode = result.reason;
+        const message = translateCopyFailedMessage(errorCode);
+        const title = i18n.t('copyFail');
+        await showToast(title, message, 'error');
+      }
+    };
+    const capturePhase = true; // Capture phase ensures we intercept the click before other handlers
+
+    document.addEventListener('click', onClick, capturePhase); // For left-clicks
+    document.addEventListener('auxclick', onClick, capturePhase); // For middle-clicks
   },
 });
