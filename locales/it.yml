@@ -87,3 +87,7 @@ fieldBody: testo
 
 errorCopyFailedNoRecipients: Nessun destinatario trovato nel link mailto.
 errorCopyFailedWriteToClipboard: Impossibile scrivere negli appunti. Controlla le impostazioni del browser e riprova.
+
+contextMenuCopyLink: Copia con I Hate Mailto
+linkNotSupported: Tipo di link non supportato.
+linkNotSupportedDescription: Questo tipo di link non è supportato, quindi l'URL completo è stato copiato senza modifiche.

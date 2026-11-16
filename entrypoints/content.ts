@@ -29,29 +29,24 @@ export default defineContentScript({
       currentSettings = values;
     });
 
-    const onClick = async (e: MouseEvent) => {
-      if (thisDomainIsDisabled) return;
+    const copyLink = async (href: string) => {
+      const handler = getLinkHandler(href, (candidate) => isHandlerEnabled(candidate, currentSettings));
 
-      const link = e
-        .composedPath() // Also includes shadow DOM elements
-        .find((n): n is HTMLAnchorElement => {
-          const isAnchor = n instanceof HTMLAnchorElement;
-          if (!isAnchor) return false;
-          const href = n.getAttribute('href') ?? '';
-          const handler = getLinkHandler(href, (candidate) => isHandlerEnabled(candidate, currentSettings));
-          return handler !== undefined;
-        });
-      if (!link) return;
+      // No handler means that the link type is not supported,
+      // so we just copy the full URL to the clipboard and show a toast informing the user
+      if (!handler) {
+        const result = await copyToClipboard(href, currentSettings.copyMode);
+        if (result.success) {
+          showToast(i18n.t('linkNotSupported'), i18n.t('linkNotSupportedDescription'), 'info');
+        } else {
+          const message = translateCopyFailedMessage(result.reason);
+          await showToast(i18n.t('copyFail'), message, 'error');
+        }
 
-      const hrefValue = link.getAttribute('href') ?? '';
-      const handler = getLinkHandler(hrefValue, (candidate) => isHandlerEnabled(candidate, currentSettings));
-      if (!handler) return;
+        return;
+      }
 
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      const decoded = handler.decode(hrefValue);
-
+      const decoded = handler.decode(href);
       const result = await copyToClipboard(decoded, currentSettings.copyMode);
       if (result.success) {
         const copiedLabel = i18n.t(LINK_TYPE_TO_LABEL_I18N_KEY_MAP[handler.type]);
@@ -60,19 +55,40 @@ export default defineContentScript({
           const notes = formatNotCopied(result.notCopied);
           await showToast(base, notes, 'info');
         } else {
-          const notes = '';
-          await showToast(i18n.t('copySuccess', [copiedLabel]), notes, 'success');
+          await showToast(i18n.t('copySuccess', [copiedLabel]), '', 'success');
         }
       } else {
-        const errorCode = result.reason;
-        const message = translateCopyFailedMessage(errorCode);
-        const title = i18n.t('copyFail');
-        await showToast(title, message, 'error');
+        const message = translateCopyFailedMessage(result.reason);
+        await showToast(i18n.t('copyFail'), message, 'error');
       }
     };
-    const capturePhase = true; // Capture phase ensures we intercept the click before other handlers
 
-    document.addEventListener('click', onClick, capturePhase); // For left-clicks
-    document.addEventListener('auxclick', onClick, capturePhase); // For middle-clicks
+    const onClick = async (e: MouseEvent) => {
+      if (e.button !== 0 && e.button !== 1) return; // left and middle click only
+      if (thisDomainIsDisabled) return;
+
+      const link = e.composedPath().find((n): n is HTMLAnchorElement => {
+        if (!(n instanceof HTMLAnchorElement)) return false;
+        const href = n.getAttribute('href') ?? '';
+        return getLinkHandler(href, (c) => isHandlerEnabled(c, currentSettings)) !== undefined;
+      });
+      if (!link) return;
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      await copyLink(link.getAttribute('href') ?? '');
+    };
+
+    const capturePhase = true;
+    document.addEventListener('click', onClick, capturePhase); // left click
+    document.addEventListener('auxclick', onClick, capturePhase); // middle click
+
+    // Context menu path (for right click)
+    browser.runtime.onMessage.addListener((msg) => {
+      if (msg?.type !== 'copy-link' || typeof msg.href !== 'string') return;
+      if (thisDomainIsDisabled) return;
+      void copyLink(msg.href);
+    });
   },
 });

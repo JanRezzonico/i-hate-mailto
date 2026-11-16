@@ -8,7 +8,7 @@ export default defineConfig({
   }),
   modules: ['@wxt-dev/i18n/module'],
   manifest: {
-    permissions: ['storage', 'clipboardWrite', 'activeTab', '<all_urls>'],
+    permissions: ['storage', 'clipboardWrite', 'activeTab', '<all_urls>', 'contextMenus'],
     default_locale: 'en',
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',

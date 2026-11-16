@@ -87,3 +87,7 @@ fieldBody: body
 
 errorCopyFailedNoRecipients: No recipients found in the mailto link.
 errorCopyFailedWriteToClipboard: Failed to write to clipboard. Please check your browser settings and try again.
+
+contextMenuCopyLink: Copy with I Hate Mailto
+linkNotSupported: Link type not supported.
+linkNotSupportedDescription: This link type isn't supported, so the full URL was copied unchanged.
